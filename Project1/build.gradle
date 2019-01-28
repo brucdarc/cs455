@@ -5,7 +5,7 @@ plugins{
 jar{
 	manifest{
 		attributes(
-		'Main-Class': 'Server'
+		'Main-Class': 'Startup'
 		)
 	}
 }

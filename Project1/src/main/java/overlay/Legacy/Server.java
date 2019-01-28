@@ -24,18 +24,18 @@ public ServerSocket startServer(int portNumber){
 }
 
 //test the first 10000 ports to find a port that is open on the machine
-public int findOpenPort(){
+public int findOpenPort() throws IOException{
     ArrayList<Integer> openports = new ArrayList<Integer>(10000);
     for( int portnumber = 1000; portnumber<10000; portnumber++){
         try (ServerSocket serverSocket = new ServerSocket(portnumber)) {
             serverSocket.close();
             return portnumber;
         }
-        catch (IOException e) {return 0;}
+        catch (IOException e) {}
 
 
     }
-    return 0;
+    throw new IOException("No open port found on machine.");
 
 }
 
