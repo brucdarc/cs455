@@ -1,8 +1,10 @@
 package overlay.transport;
 
+import javax.sound.midi.Soundbank;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 //this class will run as a thread when the server needs to recieve data
 //there will be a constructor that inputs a socket that will be used for communication
@@ -22,10 +24,47 @@ public class TCPReceiverThread implements Runnable{
         din = new DataInputStream(socket.getInputStream());
     }
 
-    //in all protocols, the first incomming int from the datastream will be its size
-    //in the binary information comming across, we will always have the first 4 bytes
-    //reserved for that int
+    /*
+    In all protocols, the first incomming int from the datastream will be its size.
+
+    In the binary information comming across, we will always have the first 4 bytes
+    reserved for that int.
+
+    This run method needs to take the incomming bytes, store them in an array, then pass it
+    to an unmarshalling method
+
+    The run method also does not allow you to throw exceptions, so we have to
+    handle them inside it.
+
+    When this class is instantiated as a thread, the run method is the entry point
+    for code execution
+    */
     public void run(){
+        int dataLength;
+
+        //make sure that the socket is still open, if it is closed our pointer to it
+        //will point to a null object
+        while(socket != null) {
+            try {
+                dataLength = din.readInt();
+
+                byte[] data = new byte[dataLength];
+                din.readFully(data, 0, dataLength);
+
+            }
+            //two blocks that allow us to differentiate between different types of errors
+            //useful in debugging
+            catch (SocketException se){
+                System.out.println(se.getMessage());
+                break;
+            }
+            catch (IOException ioe){
+                System.out.println(ioe.getMessage());
+                break;
+            }
+
+
+        }
 
     }
 
