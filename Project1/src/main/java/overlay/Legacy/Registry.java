@@ -1,3 +1,5 @@
+package overlay.Legacy;
+
 import java.net.ServerSocket;
 
 public class Registry extends Server implements Runnable{
