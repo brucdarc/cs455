@@ -15,6 +15,11 @@ public class TCPServerThread implements Runnable{
 
     boolean isRegistry;
 
+    /*
+    The serverthread had a variable that tells it if it is a messenger or registry
+
+    The constructor initializes this bool.
+     */
     public TCPServerThread(boolean isRegistry){
         this.isRegistry = isRegistry;
     }

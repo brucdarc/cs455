@@ -2,7 +2,7 @@ package overlay.node;
 
 import overlay.wireformats.Event;
 
-public class MessagingNode implements Node{
+public class MessagingNode extends Node{
 
 
 
@@ -12,9 +12,13 @@ An exception should be thrown if the event if an event meant for a registry
 
 
  */
+    @Override
     public void onEvent(Event event){
 
     }
 
-
+    @Override
+    public String doCommand(String input) {
+        return null;
+    }
 }

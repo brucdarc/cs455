@@ -13,13 +13,18 @@ If a registry gets an event meant for a messaging node, it should throw an excep
 
 
  */
-public class Registry implements Node{
+public class Registry extends Node{
     private LinkWeights linkWeights;
     private MessagingNodesList messagingNodesList;
 
-
+    @Override
     public void onEvent(Event event){
 
+    }
+
+    @Override
+    public String doCommand(String input) {
+        return null;
     }
 
     public MessagingNodesList getMessagingNodesList() {
