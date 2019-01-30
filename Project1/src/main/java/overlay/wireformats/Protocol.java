@@ -7,4 +7,5 @@ possible protocols we implement.
 
  */
 public class Protocol {
+    public int messageType;
 }

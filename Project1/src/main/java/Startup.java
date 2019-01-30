@@ -1,4 +1,32 @@
 
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+                 This class has been refactored, and should only be used for reference
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
 /*
 This class will be the entry point for the project.
 It will decide whether it is a registry or messaging node based on command line args
@@ -25,29 +53,24 @@ public static String doCommand(String input, TCPServerThread TCPserver){
         return "This is a test messageee.";
     }
     if(words[0].equals("list-messaging-nodes")){
-        if(!isRegistry) return "Invalid command, this node is a messenger node";
         return "this is a placeholder until the serverthread can access messaging nodes list";
     }
 
     if(words[0].equals("list-weights")){
-        if(!isRegistry) return "Invalid command, this node is a messenger node";
         return "This is a placeholder until serverthread has functionality to access weights";
     }
 
     if(words[0].equals("send-overlay-link-weights")){
-        if(!isRegistry) return "Invalid command, this node is a messenger node";
         return "This is placeholder until server has functionality.";
     }
 
     //the following two cases need more fuctionallity
     //a variable must follow them.
     if(words[0].equals("setup-overlay")){
-        if(!isRegistry) return "Invalid command, this node is a messenger node";
         return "This is placeholder until server has functionality.";
     }
 
     if(words[0].equals("start")){
-        if(!isRegistry) return "Invalid command, this node is a messenger node";
         return "This is placeholder until server has functionality.";
     }
 
@@ -72,20 +95,20 @@ public static void main(String[] argv){
 
 
 
-    TCPserver = new TCPServerThread(false);
+    //TCPserver = new TCPServerThread(false);
 
     //spawn a thread that executes the run method of TCPServerThread
     //thread is actually different object, but hold TCPserver, so I can
     //call methods from TCPserver to get things, or make it do things
-    Thread serverThread = new Thread(TCPserver);
-    serverThread.start();
+    //Thread serverThread = new Thread(TCPserver);
+    //serverThread.start();
 
 
     Scanner inputScanner = new Scanner(System.in);
     while(true){
         String input = inputScanner.nextLine();
-        String output = doCommand(input, TCPserver);
-        System.out.println(output);
+       // String output = doCommand(input, TCPserver);
+        //System.out.println(output);
     }
 
 
