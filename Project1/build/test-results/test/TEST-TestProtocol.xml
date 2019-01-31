@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestProtocol" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-01-31T21:44:34" hostname="uranus" time="0.005">
+  <properties/>
+  <testcase name="testMarshalInt" classname="TestProtocol" time="0.003"/>
+  <testcase name="testDemarshalInt" classname="TestProtocol" time="0.001"/>
+  <testcase name="testDemarshalInt2" classname="TestProtocol" time="0.0"/>
+  <system-out><![CDATA[334567654
+334567654
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
