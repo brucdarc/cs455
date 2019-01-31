@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestProtocol" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-01-31T21:44:34" hostname="uranus" time="0.005">
+<testsuite name="TestProtocol" tests="4" skipped="0" failures="0" errors="0" timestamp="2019-01-31T22:08:25" hostname="uranus" time="0.005">
   <properties/>
-  <testcase name="testMarshalInt" classname="TestProtocol" time="0.003"/>
+  <testcase name="testMarshalInt" classname="TestProtocol" time="0.002"/>
   <testcase name="testDemarshalInt" classname="TestProtocol" time="0.001"/>
-  <testcase name="testDemarshalInt2" classname="TestProtocol" time="0.0"/>
+  <testcase name="testDemarshalIntOffset" classname="TestProtocol" time="0.0"/>
+  <testcase name="testMarshalString" classname="TestProtocol" time="0.0"/>
   <system-out><![CDATA[334567654
 334567654
 ]]></system-out>

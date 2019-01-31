@@ -50,10 +50,26 @@ public abstract class Protocol implements Event{
         return demarshalInt(input, 0);
     }
 
+    //another method for if you want to specify index
     public static int demarshalInt(byte[] input, int index){
         ByteBuffer bbuf = ByteBuffer.wrap(input);
         return bbuf.getInt(index);
     }
+
+
+
+    public static byte[] marshalString(String input){
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4 + input.length());
+        byteBuffer.putInt(input.length());
+        byteBuffer.put(input.getBytes());
+        return byteBuffer.array();
+    }
+
+
+    public static String demarshalString(byte[] input){
+        return "Not implemented";
+    }
+
     /*
     main method with some silly test code I used to learn about marshaling and demarshaling
      */
@@ -69,6 +85,7 @@ public abstract class Protocol implements Event{
         System.out.println();
         */
 
+        /*
         int test = 334567654;
         ByteBuffer bb = ByteBuffer.allocate(4);
         bb.putInt(test);
@@ -79,6 +96,12 @@ public abstract class Protocol implements Event{
         ByteBuffer cc = ByteBuffer.wrap(me);
         int result = bb.getInt(0);
         System.out.println(result);
+        */
+        String me = "hi Im bob";
+        byte[] sbyte = me.getBytes();
+        for(byte b: sbyte){
+            System.out.println("byte: " + b);
+        }
 
 
     }
