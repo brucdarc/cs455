@@ -2,16 +2,22 @@ package overlay.wireformats;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /*
 This class is going to be the parent of all the different
 possible protocols we implement.
 
+Each protocol need to implement 3 things.
+1. a marshal method that marshals that specific type of protocol
+2. a constructor that demarshals a byte array to create an object
+3. a constructor that allows construction of the object from parameters
+
 
  */
 public abstract class Protocol implements Event{
-    private int eventType;
-    private byte[] eventData;
+    public int eventType;
+    public byte[] eventData;
 
     public Protocol(){
 
@@ -65,9 +71,34 @@ public abstract class Protocol implements Event{
         return byteBuffer.array();
     }
 
+    /*
+    A version of demarshalling a string where you can dont have to specify an index and the program assumes you start
+    from the beginning of the array
+     */
 
     public static String demarshalString(byte[] input){
-        return "Not implemented";
+        return demarshalString(input,0);
+    }
+
+    /*
+    The default bytebuffer getchar method tries to create a utf8 character. I'm using ascii, so I cast the each byte
+    to a character directly instead.
+     */
+    public static String demarshalString(byte[] input, int startIndex){
+        ByteBuffer bbuf = ByteBuffer.wrap(input);
+        int length = bbuf.getInt(startIndex);
+
+        String result = "";
+        for(int i = 0; i<(length);i++){
+            result += (char)(bbuf.get(startIndex+i+4));
+        }
+        return result;
+    }
+
+    public static void printByteArray(byte[] array){
+        for(byte b:array){
+            System.out.print(b + "\t");
+        }
     }
 
     /*
