@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestStartup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-01T22:55:54" hostname="maserati" time="0.009">
+<testsuite name="TestStartup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-02T18:02:27" hostname="carson-city" time="0.011">
   <properties/>
   <testcase name="testTesting" classname="TestStartup" time="0.002"/>
-  <testcase name="testRegistryMessenger" classname="TestStartup" time="0.007"/>
+  <testcase name="testRegistryMessenger" classname="TestStartup" time="0.008"/>
   <system-out><![CDATA[HIHIHI
 Server started on port: 1024
 ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1024]

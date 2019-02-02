@@ -1,5 +1,6 @@
 package overlay.wireformats;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -27,6 +28,11 @@ public abstract class Protocol implements Event{
         this.eventData = eventData;
         eventType = eventData[0];
     }
+
+    /*
+    all protocols should be able to marshal themselves into a byte array
+     */
+    public abstract byte[] marshal() throws IOException;
     /*
     What follows are some methods for marshaling and demarshalling strings and ints. These methods
     are static and should be called by each protocol as it needs to marshal and demarshal data.

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestEventFactory" tests="5" skipped="0" failures="0" errors="0" timestamp="2019-02-02T18:02:27" hostname="carson-city" time="0.011">
+  <properties/>
+  <testcase name="testFactory" classname="TestEventFactory" time="0.004"/>
+  <testcase name="testFactory2" classname="TestEventFactory" time="0.002"/>
+  <testcase name="testFactory3" classname="TestEventFactory" time="0.003"/>
+  <testcase name="testFactory4" classname="TestEventFactory" time="0.002"/>
+  <testcase name="testFactory5" classname="TestEventFactory" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

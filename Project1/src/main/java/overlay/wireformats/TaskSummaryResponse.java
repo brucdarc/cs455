@@ -48,12 +48,12 @@ public class TaskSummaryResponse extends Protocol{
         this.nodeIPAddress = demarshalString(data, 4);
         this.nodePortNumber = demarshalInt(data, (8 + nodeIPAddress.length()) );
 
-        int offset = 12+ nodeIPAddress.length();
+        int offset = 12 + nodeIPAddress.length();
         this.numberOfMessagesSent = demarshalInt(data, offset);
         offset += 4;
         this.sumOfSentMessages = demarshalInt(data, offset);
         offset += 4;
-        this.numberOfMessagesRelayed = demarshalInt(data, offset);
+        this.numberOfMessagesReceived = demarshalInt(data, offset);
         offset += 4;
         this.sumOfReceivedMessages = demarshalInt(data, offset);
         offset += 4;
