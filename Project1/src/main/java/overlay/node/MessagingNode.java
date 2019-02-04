@@ -4,11 +4,14 @@ import overlay.transport.TCPServerThread;
 import overlay.wireformats.Event;
 
 import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
 
 public class MessagingNode extends Node{
-
-TCPServerThread serverObject;
-Thread serverThread;
+public String registryHostname;
+public int registryPortnumber;
+public TCPServerThread serverObject;
+public Thread serverThread;
 
 /*
 This method will need to handle all events that can happen to a messaging node.
@@ -31,7 +34,9 @@ An exception should be thrown if the event if an event meant for a registry
 
 
     public MessagingNode() throws IOException{
-        serverObject = new TCPServerThread(false, this);
+        this.sockets = new ArrayList<Socket>();
+        int port = TCPServerThread.findOpenPort();
+        serverObject = new TCPServerThread(port, this);
         serverThread = new Thread(serverObject);
         serverThread.start();
     }
@@ -60,6 +65,15 @@ An exception should be thrown if the event if an event meant for a registry
     Handles exceptions here at the highest possible level
      */
     public static void main(String[] argv){
+        if(argv.length < 2){
+            System.out.println("Incorrect starting arguments");
+            System.exit(1);
+        }
+
+        String registryHostname = argv[0];
+        int registryPortnumber = Integer.parseInt(argv[1]);
+
+
         try{
             MessagingNode thisMachinesNode = new MessagingNode();
             thisMachinesNode.takeUserInput();

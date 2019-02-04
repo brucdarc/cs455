@@ -1,5 +1,10 @@
 package overlay.transport;
 
+import overlay.node.Node;
+import overlay.util.EventQueue;
+import overlay.wireformats.Event;
+import overlay.wireformats.EventFactory;
+
 import javax.sound.midi.Soundbank;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -9,6 +14,7 @@ import java.net.SocketException;
 //this class will run as a thread when the server needs to recieve data
 //there will be a constructor that inputs a socket that will be used for communication
 public class TCPReceiverThread implements Runnable{
+    public Node serversNode;
     private Socket socket;
     private DataInputStream din;
 
@@ -19,7 +25,8 @@ public class TCPReceiverThread implements Runnable{
     //a normal socket for a connection and create an instance of this
     //class with it, then run this class with another thread to allow
     //concurrency
-    public TCPReceiverThread(Socket socket) throws IOException {
+    public TCPReceiverThread(Socket socket, Node thisMachine) throws IOException {
+        this.serversNode = thisMachine;
         this.socket = socket;
         din = new DataInputStream(socket.getInputStream());
     }
@@ -51,9 +58,15 @@ public class TCPReceiverThread implements Runnable{
                 byte[] data = new byte[dataLength];
                 din.readFully(data, 0, dataLength);
 
+                serversNode.onEvent(EventFactory.makeEvent(data));
+
             }
             //two blocks that allow us to differentiate between different types of errors
             //useful in debugging
+            /*
+            get rid of the break statements before pushing final version, helpful for debugging, but
+            server should not stop if it gets a socket error
+             */
             catch (SocketException se){
                 System.out.println(se.getMessage());
                 break;

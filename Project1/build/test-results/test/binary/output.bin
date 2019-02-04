@@ -1,10 +1,13 @@
-HIHIHI
-	Server started on port: 1024
-	2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1024]
-	Server started on port: 1025
-
+HIHIHI
+Server started on port: 1024
+1024
+2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1024]
+Server started on port: 1025
+
+
 334567654
-
+
 334567654
-1
-
+60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	1
+
+ 60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	

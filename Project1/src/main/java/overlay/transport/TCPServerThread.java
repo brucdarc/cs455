@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class TCPServerThread implements Runnable{
 
-    boolean isRegistry;
-    Node serversNode;
-    ServerSocket serverSocket;
+
+    public Node serversNode;
+    public ServerSocket serverSocket;
 
     /*
     The serverthread had a variable that tells it if it is a messenger or registry
@@ -28,9 +28,9 @@ public class TCPServerThread implements Runnable{
     starts a serversocket on an open one
     the findopen port will initialize the serversocket class variable
      */
-    public TCPServerThread(boolean isRegistry, Node serversNode) throws IOException{
-        findOpenPort();
-        this.isRegistry = isRegistry;
+    public TCPServerThread(int port, Node serversNode) throws IOException{
+        serverSocket = new ServerSocket(port);
+        this.serversNode = serversNode;
     }
 
 
@@ -38,13 +38,13 @@ public class TCPServerThread implements Runnable{
     //print out the port number so we know which port the server started on
     //return the serversocket object
     //set the serversocket class variable to be the serversocket that we just opened
-    public ServerSocket findOpenPort() throws IOException {
+    public static int findOpenPort() throws IOException {
         for( int portnumber = 1000; portnumber<60000; portnumber++){
             try {
                 ServerSocket serverSocket = new ServerSocket(portnumber);
                 System.out.println("Server started on port: " + portnumber);
-                this.serverSocket = serverSocket;
-                return serverSocket;
+                serverSocket.close();
+                return portnumber;
             }
             catch (IOException e){
 
@@ -69,6 +69,9 @@ The serverThread here will spawn a reciever thread to handle communication with 
         while(true){
             try{
                 Socket socket = serverSocket.accept();
+                TCPReceiverThread connection = new TCPReceiverThread(socket,serversNode);
+                Thread receiver = new Thread(connection);
+                receiver.start();
             }
             catch(IOException e){
                 System.out.println("Could not accept incomming connection: exception: " + e);

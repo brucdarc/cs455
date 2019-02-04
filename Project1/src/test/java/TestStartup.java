@@ -2,6 +2,7 @@
 import org.junit.Test;
 import overlay.node.MessagingNode;
 import overlay.node.Registry;
+import overlay.transport.TCPServerThread;
 
 import java.io.IOException;
 
@@ -19,7 +20,9 @@ public class TestStartup {
 
     @Test
     public void testRegistryMessenger()throws IOException{
-        Registry reg = new Registry();
+        int port = TCPServerThread.findOpenPort();
+        System.out.println(port);
+        Registry reg = new Registry(port);
         MessagingNode mes = new MessagingNode();
         String result = reg.doCommand("test");
         assertEquals(result, "Test message");

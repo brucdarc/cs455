@@ -276,6 +276,17 @@ public class TestMarshaling {
         assertEquals(rr.numberOfMessagesRelayed,onOtherNode.numberOfMessagesRelayed);
     }
 
+    @Test
+    public void testMessage() throws IOException{
+        Message r = new Message("ba", "dest",5);
+        Message other = new Message(r.marshal());
+
+        assertEquals(r.eventType, other.eventType);
+        assertEquals(r.source, other.source);
+        assertEquals(r.destination,other.destination);
+        assertEquals(r.communicatedValue, other.communicatedValue);
+    }
+
 
 
 

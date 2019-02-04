@@ -2,6 +2,8 @@ package overlay.node;
 
 import overlay.wireformats.Event;
 
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -9,6 +11,7 @@ I have chosen to make this class an abstract class instead of an interface so I 
 The takeuserinput method will be needed to be exactly the same for registry and messengers
  */
 public abstract class Node {
+    public ArrayList<Socket> sockets;
 
 
     public abstract void onEvent(Event event);

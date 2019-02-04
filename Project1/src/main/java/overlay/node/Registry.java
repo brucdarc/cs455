@@ -6,6 +6,8 @@ import overlay.wireformats.LinkWeights;
 import overlay.wireformats.MessagingNodesList;
 
 import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
 
 /*
 This class is a dataStructure that contains the linkWeights and messagingNodesList
@@ -22,7 +24,7 @@ public class Registry extends Node{
     private MessagingNodesList messagingNodesList;
     private TCPServerThread serverObject;
     private Thread serverThread;
-
+    public int port;
     @Override
     public void onEvent(Event event){
 
@@ -34,10 +36,12 @@ public class Registry extends Node{
     pass this node into serverThread so it knows who its node is
      */
 
-    public Registry() throws IOException{
-        serverObject = new TCPServerThread(true, this);
+    public Registry(int port) throws IOException{
+        this.sockets = new ArrayList<Socket>();
+        serverObject = new TCPServerThread(port, this);
         serverThread = new Thread(serverObject);
         serverThread.start();
+        this.port = port;
     }
 
     /*
@@ -80,8 +84,15 @@ public class Registry extends Node{
     Handles exceptions here at the highest possible level
     */
     public static void main(String[] argv){
+        if(argv.length < 1){
+            System.out.println("specify port number");
+            System.exit(1);
+        }
+
+        int port = Integer.parseInt(argv[0]);
+
         try {
-            Registry thisMachinesRegistry = new Registry();
+            Registry thisMachinesRegistry = new Registry(port);
             thisMachinesRegistry.takeUserInput();
         }
         catch(IOException e){

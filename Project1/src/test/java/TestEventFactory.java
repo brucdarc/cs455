@@ -76,7 +76,7 @@ public class TestEventFactory {
     }
 
     @Test
-    public void testFactory5() throws IOException{
+    public void testFactoryBrokenEvent() throws IOException{
         Register broken = new Register("fdsfad",1234);
         broken.eventType = 30;
         try{
@@ -88,7 +88,52 @@ public class TestEventFactory {
         }
     }
 
-    
+    @Test
+    public void testFactory5() throws IOException{
+        TaskInitiate r = new TaskInitiate(12);
+
+        Event a1 = EventFactory.makeEvent(r.marshal());
+
+        assertEquals( (a1 instanceof TaskInitiate), true  );
+
+        TaskComplete rr = new TaskComplete("ipppp",123);
+
+        Event a2 = EventFactory.makeEvent(rr.marshal());
+
+        assertEquals( (a2 instanceof TaskComplete), true  );
+
+    }
+
+    @Test
+    public void testFactory6() throws IOException {
+        Message r = new Message("ba", "dest",5);
+
+        Event a1 = EventFactory.makeEvent(r.marshal());
+
+        assertEquals((a1 instanceof Message), true);
+
+        TaskSummaryRequest rr = new TaskSummaryRequest();
+
+        Event a2 = EventFactory.makeEvent(rr.marshal());
+
+        assertEquals((a2 instanceof TaskSummaryRequest), true);
+
+    }
+
+    @Test
+    public void testFactory7() throws IOException {
+        TaskSummaryResponse r = new TaskSummaryResponse("aaaa",1,2,3,4,5,6);
+
+        Event a1 = EventFactory.makeEvent(r.marshal());
+
+        assertEquals((a1 instanceof TaskSummaryResponse), true);
+
+    }
+
+
+
+
+
 
 
 
