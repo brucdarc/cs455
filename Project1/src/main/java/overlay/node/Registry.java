@@ -4,10 +4,14 @@ import overlay.transport.TCPServerThread;
 import overlay.wireformats.Event;
 import overlay.wireformats.LinkWeights;
 import overlay.wireformats.MessagingNodesList;
+import overlay.wireformats.Register;
+import sun.security.x509.IPAddressName;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 This class is a dataStructure that contains the linkWeights and messagingNodesList
@@ -25,8 +29,10 @@ public class Registry extends Node{
     private TCPServerThread serverObject;
     private Thread serverThread;
     public int port;
+    public Map<String, Socket> sockets;
     @Override
     public void onEvent(Event event){
+        if(event instanceof Register) register((Register)event);
 
     }
     /*
@@ -37,7 +43,7 @@ public class Registry extends Node{
      */
 
     public Registry(int port) throws IOException{
-        this.sockets = new ArrayList<Socket>();
+        this.sockets = new HashMap<String, Socket>();
         serverObject = new TCPServerThread(port, this);
         serverThread = new Thread(serverObject);
         serverThread.start();
@@ -76,6 +82,22 @@ public class Registry extends Node{
     //accessor method
     public LinkWeights getLinkWeights() {
         return linkWeights;
+    }
+
+    //handles the register event
+    /*
+    this is incomplete right now, need to remove print statements and add logic to send register response back
+     */
+
+    // TODO: 2/4/19
+    public void register(Register registerRequest){
+        System.out.println("here");
+        Socket sock = registerRequest.socket;
+        String ip = registerRequest.IPAddress;
+        System.out.println(ip);
+        sockets.put(ip,sock);
+        System.out.println(ip + " " + registerRequest.port);
+        System.out.println(sockets.get(ip));
     }
 
     /*

@@ -1,9 +1,12 @@
 package overlay.node;
 
+import overlay.transport.TCPSender;
 import overlay.transport.TCPServerThread;
 import overlay.wireformats.Event;
+import overlay.wireformats.Register;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -73,9 +76,25 @@ An exception should be thrown if the event if an event meant for a registry
         String registryHostname = argv[0];
         int registryPortnumber = Integer.parseInt(argv[1]);
 
+        /*
+        all the stuff that happens here on startup should be refactored.
 
+        so for it sends a register request to the registry
+         */
+        // TODO: 2/4/19
         try{
             MessagingNode thisMachinesNode = new MessagingNode();
+            String ip = InetAddress.getLocalHost().getHostAddress();
+            int port = thisMachinesNode.serverObject.serverSocket.getLocalPort();
+            System.out.println(ip + " " + port);
+            Register request = new Register(ip, port);
+            Socket regSock = new Socket(registryHostname,registryPortnumber);
+            TCPSender regSender = new TCPSender(regSock);
+            System.out.println("did stuff");
+            regSender.sendData(request.eventData);
+
+
+
             thisMachinesNode.takeUserInput();
          }
         catch(IOException e){

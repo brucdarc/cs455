@@ -4,6 +4,7 @@ import overlay.node.Registry;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.nio.ByteBuffer;
 /*
 This class will work on a registry object to register a connection
@@ -17,6 +18,7 @@ Register has the event type of 1
 public class Register extends Protocol{
     public String IPAddress;
     public int port;
+    public Socket socket;
 
     //this method will need to second argument of what to register
     public void register(Registry registry){

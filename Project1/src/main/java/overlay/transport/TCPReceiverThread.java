@@ -4,6 +4,7 @@ import overlay.node.Node;
 import overlay.util.EventQueue;
 import overlay.wireformats.Event;
 import overlay.wireformats.EventFactory;
+import overlay.wireformats.Register;
 
 import javax.sound.midi.Soundbank;
 import java.io.DataInputStream;
@@ -58,7 +59,15 @@ public class TCPReceiverThread implements Runnable{
                 byte[] data = new byte[dataLength];
                 din.readFully(data, 0, dataLength);
 
-                serversNode.onEvent(EventFactory.makeEvent(data));
+                Event event = (EventFactory.makeEvent(data));
+
+                if(event instanceof Register){
+                    Register reg = (Register) event;
+                    reg.socket = socket;
+                    event = reg;
+                }
+                serversNode.onEvent(event);
+
 
             }
             //two blocks that allow us to differentiate between different types of errors
