@@ -1,9 +1,11 @@
 package overlay.node;
 
+import overlay.transport.TCPReceiverThread;
 import overlay.transport.TCPSender;
 import overlay.transport.TCPServerThread;
 import overlay.wireformats.Event;
 import overlay.wireformats.Register;
+import overlay.wireformats.RegisterResponse;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -24,6 +26,7 @@ An exception should be thrown if the event if an event meant for a registry
  */
     @Override
     public void onEvent(Event event){
+        if(event instanceof RegisterResponse)  handleRegistryResponse((RegisterResponse)event);
 
     }
 
@@ -36,8 +39,10 @@ An exception should be thrown if the event if an event meant for a registry
      */
 
 
-    public MessagingNode() throws IOException{
+    public MessagingNode(String registryHostname, int registryPortnumber) throws IOException{
         this.sockets = new ArrayList<Socket>();
+        this.registryHostname = registryHostname;
+        this.registryPortnumber = registryPortnumber;
         int port = TCPServerThread.findOpenPort();
         serverObject = new TCPServerThread(port, this);
         serverThread = new Thread(serverObject);
@@ -62,6 +67,28 @@ An exception should be thrown if the event if an event meant for a registry
                 return "Command not recognized";
         }
     }
+
+    /*
+    This method sends the register request request to the registry
+     */
+
+    public void sendRegisterRequest(String ip, int port) throws IOException{
+        Register request = new Register(ip, port);
+        Socket regSock = new Socket(registryHostname,registryPortnumber);
+        TCPReceiverThread receiver = new TCPReceiverThread(regSock, this);
+        Thread receiverThread = new Thread(receiver);
+        receiverThread.start();
+        TCPSender regSender = new TCPSender(regSock);
+        regSender.sendData(request.eventData);
+
+    }
+    //handles registry response. tells the node that if registered correctly or incorrectly
+    public void handleRegistryResponse(RegisterResponse registerResponse){
+        if(registerResponse.statusCode == 1) System.out.println("Could not register: " + registerResponse.additionalInfo);
+        else System.out.println("Registered successfully: " + registerResponse.additionalInfo);
+
+    }
+
     /*
     Simple main method that will start the server then put the main thread into taking user input.
     Information about the server should probably be stored as class variables
@@ -80,21 +107,16 @@ An exception should be thrown if the event if an event meant for a registry
         all the stuff that happens here on startup should be refactored.
 
         so for it sends a register request to the registry
+
+        handles respose
          */
         // TODO: 2/4/19
         try{
-            MessagingNode thisMachinesNode = new MessagingNode();
+            MessagingNode thisMachinesNode = new MessagingNode(registryHostname,registryPortnumber);
             String ip = InetAddress.getLocalHost().getHostAddress();
             int port = thisMachinesNode.serverObject.serverSocket.getLocalPort();
-            System.out.println(ip + " " + port);
-            Register request = new Register(ip, port);
-            Socket regSock = new Socket(registryHostname,registryPortnumber);
-            TCPSender regSender = new TCPSender(regSock);
-            System.out.println("did stuff");
-            regSender.sendData(request.eventData);
-
-
-
+            System.out.println("Server running on: " + ip + " " + port);
+            thisMachinesNode.sendRegisterRequest(ip,port);
             thisMachinesNode.takeUserInput();
          }
         catch(IOException e){

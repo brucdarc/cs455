@@ -2,6 +2,7 @@ package overlay.node;
 
 import overlay.wireformats.Event;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public abstract class Node {
     public ArrayList<Socket> sockets;
 
 
-    public abstract void onEvent(Event event);
+    public abstract void onEvent(Event event) throws IOException;
     /*
     This method is intended to be different for messaging nodes and registries.
     There are no commands shared between messengers and registries

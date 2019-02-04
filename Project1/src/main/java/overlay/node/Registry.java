@@ -1,10 +1,8 @@
 package overlay.node;
 
+import overlay.transport.TCPSender;
 import overlay.transport.TCPServerThread;
-import overlay.wireformats.Event;
-import overlay.wireformats.LinkWeights;
-import overlay.wireformats.MessagingNodesList;
-import overlay.wireformats.Register;
+import overlay.wireformats.*;
 import sun.security.x509.IPAddressName;
 
 import java.io.IOException;
@@ -31,7 +29,7 @@ public class Registry extends Node{
     public int port;
     public Map<String, Socket> sockets;
     @Override
-    public void onEvent(Event event){
+    public void onEvent(Event event) throws IOException{
         if(event instanceof Register) register((Register)event);
 
     }
@@ -86,18 +84,47 @@ public class Registry extends Node{
 
     //handles the register event
     /*
-    this is incomplete right now, need to remove print statements and add logic to send register response back
+    the register is invalid if there is an ip matmatch between socket and request, or if the ip is already registered.
+
+    a register response is sent back to the mess node to tell it if it registered successfully.
+    if the registration was valid the connection is added to the sockets map that maps ip strings to sockets
      */
 
     // TODO: 2/4/19
-    public void register(Register registerRequest){
-        System.out.println("here");
+    public void register(Register registerRequest) throws IOException{
+        //default respose for successful registration
+        RegisterResponse registerResponse = new RegisterResponse((byte)0,"registered successfully");
         Socket sock = registerRequest.socket;
         String ip = registerRequest.IPAddress;
-        System.out.println(ip);
-        sockets.put(ip,sock);
-        System.out.println(ip + " " + registerRequest.port);
-        System.out.println(sockets.get(ip));
+
+        synchronized (sockets) {
+            /*
+            Contains because the socket address often has extra information
+            test if ip mismatch
+             */
+            if (!sock.getRemoteSocketAddress().toString().contains(ip)) {
+                registerResponse = new RegisterResponse((byte) 1, "connection ip does not match ip in request");
+                System.out.println("IP " + ip + " failed to register: mismatched hostnames");
+            }
+
+            // if there ip is already registered, tell it that
+            else if (sockets.containsKey(ip)) {
+                registerResponse = new RegisterResponse((byte) 1, "Your ip is already resgistered");
+                System.out.println("Ip " + ip + " tried to register twice");
+            }
+            //if the registration is valid add it to the table
+            else {
+                sockets.put(ip, sock);
+                System.out.println("Revieved registration from " + ip);
+            }
+
+        }
+        TCPSender sender = new TCPSender(sock);
+        System.out.println("sending to " + sock);
+        sender.sendData(registerResponse.eventData);
+
+
+
     }
 
     /*

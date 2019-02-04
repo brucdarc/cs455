@@ -23,7 +23,7 @@ public class TestStartup {
         int port = TCPServerThread.findOpenPort();
         System.out.println(port);
         Registry reg = new Registry(port);
-        MessagingNode mes = new MessagingNode();
+        MessagingNode mes = new MessagingNode("myselver", 1237);
         String result = reg.doCommand("test");
         assertEquals(result, "Test message");
         result = mes.doCommand("test");
