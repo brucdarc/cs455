@@ -21,14 +21,14 @@ public abstract class Node {
     There are no commands shared between messengers and registries
     so this method should be completely different for both classes.
      */
-    public abstract String doCommand(String input);
+    public abstract String doCommand(String input) throws IOException;
 
     /*
     This is a method that both children will use to take user input in a while loop. It reads a string
     from system in, then runs the do command on it, then prints the output. This method should be called after a
     server thread is spawned so that the thread can be running concurrently.
      */
-    public void takeUserInput(){
+    public void takeUserInput() throws IOException{
         Scanner inputScanner = new Scanner(System.in);
         while(true){
             String input = inputScanner.nextLine();

@@ -3,9 +3,7 @@ package overlay.node;
 import overlay.transport.TCPReceiverThread;
 import overlay.transport.TCPSender;
 import overlay.transport.TCPServerThread;
-import overlay.wireformats.Event;
-import overlay.wireformats.Register;
-import overlay.wireformats.RegisterResponse;
+import overlay.wireformats.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -13,10 +11,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class MessagingNode extends Node{
-public String registryHostname;
-public int registryPortnumber;
-public TCPServerThread serverObject;
-public Thread serverThread;
+    public String myHostname;
+    public int myPort;
+    public String registryHostname;
+    public int registryPortnumber;
+    public TCPServerThread serverObject;
+    public Thread serverThread;
 
 /*
 This method will need to handle all events that can happen to a messaging node.
@@ -27,7 +27,7 @@ An exception should be thrown if the event if an event meant for a registry
     @Override
     public void onEvent(Event event){
         if(event instanceof RegisterResponse)  handleRegistryResponse((RegisterResponse)event);
-
+        if(event instanceof DeregisterResponse)  handleDeregistryResponse((DeregisterResponse)event);
     }
 
         /*
@@ -47,6 +47,8 @@ An exception should be thrown if the event if an event meant for a registry
         serverObject = new TCPServerThread(port, this);
         serverThread = new Thread(serverObject);
         serverThread.start();
+        myHostname = InetAddress.getLocalHost().getHostAddress();
+        myPort = serverObject.serverSocket.getLocalPort();
     }
     /*
     This method is overrriden, it only allows commands to be taken that are applicable to a messenger node.
@@ -54,7 +56,7 @@ An exception should be thrown if the event if an event meant for a registry
     command.
      */
     @Override
-    public String doCommand(String input) {
+    public String doCommand(String input) throws IOException{
         String[] words = input.split("\\s+");
         switch(words[0]){
             case "test":
@@ -63,6 +65,12 @@ An exception should be thrown if the event if an event meant for a registry
                 return "Not implemented yet";
             case "exit-overlay":
                 return "Not implemented yet";
+            case "register":
+                sendRegisterRequest();
+                return "sent registration request";
+            case "deregister":
+                sendDeregisterRequest();
+                return "sent deregister request";
             default:
                 return "Command not recognized";
         }
@@ -72,7 +80,9 @@ An exception should be thrown if the event if an event meant for a registry
     This method sends the register request request to the registry
      */
 
-    public void sendRegisterRequest(String ip, int port) throws IOException{
+    public void sendRegisterRequest() throws IOException{
+        String ip = myHostname;
+        int port = myPort;
         Register request = new Register(ip, port);
         Socket regSock = new Socket(registryHostname,registryPortnumber);
         TCPReceiverThread receiver = new TCPReceiverThread(regSock, this);
@@ -84,8 +94,38 @@ An exception should be thrown if the event if an event meant for a registry
     }
     //handles registry response. tells the node that if registered correctly or incorrectly
     public void handleRegistryResponse(RegisterResponse registerResponse){
-        if(registerResponse.statusCode == 1) System.out.println("Could not register: " + registerResponse.additionalInfo);
+        if(registerResponse.statusCode == 1){
+        System.out.println("Could not register: " + registerResponse.additionalInfo);
+        }
         else System.out.println("Registered successfully: " + registerResponse.additionalInfo);
+
+    }
+
+    /*
+    send a deregister request to registry to deregister this node
+     */
+
+    public void sendDeregisterRequest() throws IOException{
+        String ip = myHostname;
+        int port = myPort;
+        Deregister request = new Deregister(ip, port);
+        Socket regSock = new Socket(registryHostname,registryPortnumber);
+        TCPReceiverThread receiver = new TCPReceiverThread(regSock, this);
+        Thread receiverThread = new Thread(receiver);
+        receiverThread.start();
+        TCPSender regSender = new TCPSender(regSock);
+        regSender.sendData(request.eventData);
+    }
+
+    /*
+
+     */
+    //handles registry response. tells the node that if registered correctly or incorrectly
+    public void handleDeregistryResponse(DeregisterResponse deregisterResponse){
+        if(deregisterResponse.statusCode == 1){
+            System.out.println("Could not deregister: " + deregisterResponse.additionalInfo);
+        }
+        else System.out.println("Deregistered successfully: " + deregisterResponse.additionalInfo);
 
     }
 
@@ -116,7 +156,7 @@ An exception should be thrown if the event if an event meant for a registry
             String ip = InetAddress.getLocalHost().getHostAddress();
             int port = thisMachinesNode.serverObject.serverSocket.getLocalPort();
             System.out.println("Server running on: " + ip + " " + port);
-            thisMachinesNode.sendRegisterRequest(ip,port);
+            thisMachinesNode.sendRegisterRequest();
             thisMachinesNode.takeUserInput();
          }
         catch(IOException e){

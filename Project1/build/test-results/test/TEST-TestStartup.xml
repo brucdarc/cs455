@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestStartup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-04T22:06:10" hostname="maserati" time="0.009">
+<testsuite name="TestStartup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-05T21:54:19" hostname="mars" time="0.013">
   <properties/>
   <testcase name="testTesting" classname="TestStartup" time="0.002"/>
-  <testcase name="testRegistryMessenger" classname="TestStartup" time="0.006"/>
+  <testcase name="testRegistryMessenger" classname="TestStartup" time="0.011"/>
   <system-out><![CDATA[HIHIHI
 Server started on port: 1024
 1024
 ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1024]
 Server started on port: 1025
+ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1025]
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

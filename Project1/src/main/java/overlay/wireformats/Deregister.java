@@ -4,6 +4,7 @@ import overlay.node.Registry;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 
 /*
 This class will work on a registry object to deregister a connection
@@ -15,6 +16,7 @@ deregister has event type of 3
 public class Deregister extends Protocol{
     public String IPAddress;
     public int port;
+    public Socket socket;
 
 
     //this method will need another argument of what to deregister

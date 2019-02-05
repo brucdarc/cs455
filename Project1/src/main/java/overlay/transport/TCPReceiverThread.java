@@ -2,6 +2,7 @@ package overlay.transport;
 
 import overlay.node.Node;
 import overlay.util.EventQueue;
+import overlay.wireformats.Deregister;
 import overlay.wireformats.Event;
 import overlay.wireformats.EventFactory;
 import overlay.wireformats.Register;
@@ -66,6 +67,13 @@ public class TCPReceiverThread implements Runnable{
                     reg.socket = socket;
                     event = reg;
                 }
+
+                if(event instanceof Deregister){
+                    Deregister reg = (Deregister) event;
+                    reg.socket = socket;
+                    event = reg;
+                }
+
                 serversNode.onEvent(event);
 
 
