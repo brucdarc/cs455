@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MessagingNode extends Node{
     public String myHostname;
@@ -18,6 +20,8 @@ public class MessagingNode extends Node{
     public TCPServerThread serverObject;
     public Thread serverThread;
     public MessagingNodesList peers;
+    public Map<String,Socket> connections;
+    public LinkWeights linkWeights;
 
 /*
 This method will need to handle all events that can happen to a messaging node.
@@ -29,7 +33,15 @@ An exception should be thrown if the event if an event meant for a registry
     public void onEvent(Event event){
         if(event instanceof RegisterResponse)  handleRegistryResponse((RegisterResponse)event);
         if(event instanceof DeregisterResponse)  handleDeregistryResponse((DeregisterResponse)event);
-        if(event instanceof MessagingNodesList) handleOverlayCreation((MessagingNodesList)event);
+        if(event instanceof MessagingNodesList) {
+            try {
+                handleOverlayCreation((MessagingNodesList) event);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        if(event instanceof LinkWeights) handleLinkWeights((LinkWeights)event);
     }
 
         /*
@@ -42,7 +54,6 @@ An exception should be thrown if the event if an event meant for a registry
 
 
     public MessagingNode(String registryHostname, int registryPortnumber) throws IOException{
-        this.sockets = new ArrayList<Socket>();
         this.registryHostname = registryHostname;
         this.registryPortnumber = registryPortnumber;
         int port = TCPServerThread.findOpenPort();
@@ -51,6 +62,7 @@ An exception should be thrown if the event if an event meant for a registry
         serverThread.start();
         myHostname = InetAddress.getLocalHost().getHostAddress();
         myPort = serverObject.serverSocket.getLocalPort();
+        connections = new HashMap<String,Socket>();
     }
     /*
     This method is overrriden, it only allows commands to be taken that are applicable to a messenger node.
@@ -65,12 +77,10 @@ An exception should be thrown if the event if an event meant for a registry
                 return "Test message";
             case "print-shortest-path":
                 return "Not implemented yet";
-            case "exit-overlay":
-                return "Not implemented yet";
             case "register":
                 sendRegisterRequest();
                 return "sent registration request";
-            case "deregister":
+            case "exit-overlay":
                 sendDeregisterRequest();
                 return "sent deregister request";
             default:
@@ -132,9 +142,41 @@ An exception should be thrown if the event if an event meant for a registry
     }
 
 
-    public void handleOverlayCreation(MessagingNodesList peers){
+    public void handleOverlayCreation(MessagingNodesList peers) throws IOException{
         this.peers = peers;
         System.out.println("recieved peers");
+        connectToPeers();
+    }
+
+    public void connectToPeers() throws IOException{
+        for(MessagingNodeInfo peer: peers.peers){
+            if(peer.nodeHostName.compareTo(myHostname) > 0){
+                connectToPeer(peer);
+            }
+            if(peer.nodeHostName.compareTo(myHostname) == 0){
+                if(peer.nodePortnum > myPort){
+                    connectToPeer(peer);
+                }
+            }
+        }
+    }
+
+    public void connectToPeer(MessagingNodeInfo peer) throws IOException{
+        Socket socket = new Socket(peer.nodeHostName,peer.nodePortnum);
+        String key = peer.nodeHostName + ":" + peer.nodePortnum;
+        TCPReceiverThread receiver = new TCPReceiverThread(socket, this);
+        synchronized (connections) {
+            connections.put(key, socket);
+        }
+        Thread receiverThread = new Thread(receiver);
+        receiverThread.start();
+        System.out.println("connected to peer: " + key);
+    }
+
+    public void handleLinkWeights(LinkWeights linkWeights){
+        this.linkWeights = linkWeights;
+        System.out.println("Recieved link weights from registry");
+        //do dijkstras and make next hop map
     }
 
     /*

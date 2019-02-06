@@ -1,9 +1,9 @@
 HIHIHI
-Server started on port: 1024
-1024
-2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1024]
-Server started on port: 1025
-2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1025]
+Server started on port: 1028
+1028
+2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1028]
+Server started on port: 1029
+2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1029]
 [correctly exited with failure for trying to create an overlay with odd nodes and odd links
 
 334567654

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 /*
 This class is a dataStructure that contains the linkWeights and messagingNodesList
@@ -76,6 +77,7 @@ public class Registry extends Node{
                     if(words.length < 2) throw new IOException("Too few arguments specify number of links per node");
                     int links = Integer.parseInt(words[1]);
                     constructOverlay(links);
+                    createLinkWeights();
                     return "successfully sent overlay information to messaging nodes";
                 }
                 catch (Exception e){
@@ -143,7 +145,6 @@ public class Registry extends Node{
 
         }
         TCPSender sender = new TCPSender(sock);
-        System.out.println("sending to " + sock);
         sender.sendData(registerResponse.eventData);
 
 
@@ -237,6 +238,35 @@ public class Registry extends Node{
             }
         }
         return result;
+    }
+
+
+    public void createLinkWeights() throws IOException{
+        int numNodes = connectionsTable.length;
+        ArrayList<LinkInfo> linkInfos = new ArrayList<LinkInfo>();
+        for(int i = 0;i<numNodes;i++){
+            for(int k = i;k<numNodes;k++){
+                Register node1 = messengerNodes.get(i);
+                Register node2 = messengerNodes.get(k);
+                //random weight 1 through 9
+                int weight = ThreadLocalRandom.current().nextInt(1,10);
+
+                LinkInfo link = new LinkInfo(node1.IPAddress,node1.port,node2.IPAddress,node2.port,weight);
+                linkInfos.add(link);
+
+            }
+        }
+
+        LinkWeights result = new LinkWeights(linkInfos.size(), linkInfos.toArray(new LinkInfo[linkInfos.size()]));
+        this.linkWeights = result;
+
+        /*
+        send the link weight information to all nodes
+         */
+        for(Socket socket:sockets.values()){
+            TCPSender sender = new TCPSender(socket);
+            sender.sendData(result.eventData);
+        }
     }
 
     /*
