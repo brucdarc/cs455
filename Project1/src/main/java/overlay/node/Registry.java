@@ -2,8 +2,8 @@ package overlay.node;
 
 import overlay.transport.TCPSender;
 import overlay.transport.TCPServerThread;
+import overlay.util.OverlayCreator;
 import overlay.wireformats.*;
-import sun.security.x509.IPAddressName;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -30,6 +30,7 @@ public class Registry extends Node{
     public ArrayList<Register> messengerNodes;
     public int port;
     public Map<String, Socket> sockets;
+    int[][] connectionsTable;
 
 
     @Override
@@ -65,15 +66,27 @@ public class Registry extends Node{
             case "test":
                 return "Test message";
             case "list-messaging-nodes":
-                return "Not implemented yet";
+                return "Not implemented yet 1";
             case "list-weights":
-                return "Not implemented yet";
+                return "Not implemented yet 2";
             case "send-overlay-link-weights":
-                return "Not implemented yet";
-            case "setup-overlay":
-                return "Not implemented yet";
+                return "Not implemented yet 3";
+            case "setup-overlay":{
+                try {
+                    if(words.length < 2) throw new IOException("Too few arguments specify number of links per node");
+                    int links = Integer.parseInt(words[1]);
+                    constructOverlay(links);
+                    return "successfully sent overlay information to messaging nodes";
+                }
+                catch (Exception e){
+                    System.out.println(e);
+                    e.printStackTrace();
+                    return "failed to setup overlay";
+                }
+
+            }
             case "start":
-                return "Not implemented yet";
+                return "Not implemented yet 4";
             default:
                 return "Command not recognized";
 
@@ -191,12 +204,17 @@ public class Registry extends Node{
 
    There will be a method run before this that makes sure that the graph type is legal before trying
    to set it up.
+
+   runs the connections table set up from the overlay creator class. It returns table of ints where 1 represents a link
+   and 0 represents no link. If the setup is illegal, overlay creator will throw an exception
      */
 
-    public void constructOverlay(int numberOfNeighbors) throws IOException{
+    public void constructOverlay(int numberOfNeighbors) throws Exception{
+        connectionsTable = OverlayCreator.createOverlay(messengerNodes.size(),numberOfNeighbors);
+
         for(int index = 0; index<messengerNodes.size();index++){
-            ArrayList<MessagingNodeInfo> neighbors = getConnectionsFromNode(numberOfNeighbors,index);
-            MessagingNodesList connections = new MessagingNodesList(neighbors.size(), (MessagingNodeInfo[])neighbors.toArray());
+            ArrayList<MessagingNodeInfo> neighbors = getConnectionsFromNode(connectionsTable[index],index);
+            MessagingNodesList connections = new MessagingNodesList(neighbors.size(), neighbors.toArray(new MessagingNodeInfo[neighbors.size()]));
             Socket toNode = messengerNodes.get(index).socket;
             TCPSender sender = new TCPSender(toNode);
             sender.sendData(connections.marshal());
@@ -205,25 +223,20 @@ public class Registry extends Node{
 
     /*
     helper method that does an inner loop for construct Overlay.
+    takes one connection array of into and creates an arraylist of connections to be sent to a particular node
      */
 
-    public ArrayList<MessagingNodeInfo> getConnectionsFromNode(int numberOfNeighbors, int indexOfNode){
-        ArrayList<MessagingNodeInfo> neighbors = new ArrayList<MessagingNodeInfo>();
-        for(int b = 0; b<numberOfNeighbors && indexOfNode+b<messengerNodes.size(); b++){
-            Register neighbor = messengerNodes.get(indexOfNode+b);
-            MessagingNodeInfo infoNeighbor = new MessagingNodeInfo(neighbor.IPAddress, neighbor.port);
-            neighbors.add(infoNeighbor);
-        }
-
-        if(neighbors.size() != numberOfNeighbors){
-            int remaining = numberOfNeighbors-neighbors.size();
-            for(int b = 0; b<remaining; b++){
-                Register neighbor = messengerNodes.get(b);
-                MessagingNodeInfo infoNeighbor = new MessagingNodeInfo(neighbor.IPAddress, neighbor.port);
-                neighbors.add(infoNeighbor);
+    public ArrayList<MessagingNodeInfo> getConnectionsFromNode(int[] connections, int indexOfNode) throws IOException{
+        ArrayList<MessagingNodeInfo> result = new ArrayList<MessagingNodeInfo>();
+        for(int neighbor = 0; neighbor<connections.length; neighbor++){
+            if(connections[neighbor] == 1){
+                String linkedHostname = messengerNodes.get(neighbor).IPAddress;
+                int linkedPort = messengerNodes.get(neighbor).port;
+                MessagingNodeInfo linked = new MessagingNodeInfo(linkedHostname,linkedPort);
+                result.add(linked);
             }
         }
-        return neighbors;
+        return result;
     }
 
     /*

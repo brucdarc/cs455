@@ -4,11 +4,11 @@
 2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1024]
 Server started on port: 1025
 2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1025]
-
-
+[correctly exited with failure for trying to create an overlay with odd nodes and odd links
+
 334567654
-
+
 334567654
-60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	1
-
- 60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	
+60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	1
+
+#60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	

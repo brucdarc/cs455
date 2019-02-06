@@ -17,6 +17,7 @@ public class MessagingNode extends Node{
     public int registryPortnumber;
     public TCPServerThread serverObject;
     public Thread serverThread;
+    public MessagingNodesList peers;
 
 /*
 This method will need to handle all events that can happen to a messaging node.
@@ -28,6 +29,7 @@ An exception should be thrown if the event if an event meant for a registry
     public void onEvent(Event event){
         if(event instanceof RegisterResponse)  handleRegistryResponse((RegisterResponse)event);
         if(event instanceof DeregisterResponse)  handleDeregistryResponse((DeregisterResponse)event);
+        if(event instanceof MessagingNodesList) handleOverlayCreation((MessagingNodesList)event);
     }
 
         /*
@@ -127,6 +129,12 @@ An exception should be thrown if the event if an event meant for a registry
         }
         else System.out.println("Deregistered successfully: " + deregisterResponse.additionalInfo);
 
+    }
+
+
+    public void handleOverlayCreation(MessagingNodesList peers){
+        this.peers = peers;
+        System.out.println("recieved peers");
     }
 
     /*
