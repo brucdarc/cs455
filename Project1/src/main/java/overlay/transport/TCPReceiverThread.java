@@ -51,6 +51,7 @@ public class TCPReceiverThread implements Runnable{
     public void run(){
         int dataLength;
 
+
         //make sure that the socket is still open, if it is closed our pointer to it
         //will point to a null object
         while(socket != null) {

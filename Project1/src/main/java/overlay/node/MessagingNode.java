@@ -1,5 +1,6 @@
 package overlay.node;
 
+import overlay.dijkstra.ShortestPath;
 import overlay.transport.TCPReceiverThread;
 import overlay.transport.TCPSender;
 import overlay.transport.TCPServerThread;
@@ -11,10 +12,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class MessagingNode extends Node{
     public String myHostname;
     public int myPort;
+    public String myIdentifier;
     public String registryHostname;
     public int registryPortnumber;
     public TCPServerThread serverObject;
@@ -22,26 +25,29 @@ public class MessagingNode extends Node{
     public MessagingNodesList peers;
     public Map<String,Socket> connections;
     public LinkWeights linkWeights;
+    public ShortestPath shortestPath;
+    public Map<String, String> nextHop;
 
-/*
-This method will need to handle all events that can happen to a messaging node.
-An exception should be thrown if the event if an event meant for a registry
+    /*
+    This method will need to handle all events that can happen to a messaging node.
+    An exception should be thrown if the event if an event meant for a registry
 
 
- */
+     */
     @Override
     public void onEvent(Event event){
-        if(event instanceof RegisterResponse)  handleRegistryResponse((RegisterResponse)event);
-        if(event instanceof DeregisterResponse)  handleDeregistryResponse((DeregisterResponse)event);
-        if(event instanceof MessagingNodesList) {
-            try {
-                handleOverlayCreation((MessagingNodesList) event);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
+        try {
+            if (event instanceof RegisterResponse) handleRegistryResponse((RegisterResponse) event);
+            if (event instanceof DeregisterResponse) handleDeregistryResponse((DeregisterResponse) event);
+            if (event instanceof MessagingNodesList) handleOverlayCreation((MessagingNodesList) event);
+            if (event instanceof LinkWeights) handleLinkWeights((LinkWeights) event);
+            if (event instanceof Message) handleMessage((Message) event);
+            if (event instanceof TaskInitiate) handleTaskInitiate((TaskInitiate) event);
+            if (event instanceof Register) handlePeerRegistration((Register) event);
         }
-        if(event instanceof LinkWeights) handleLinkWeights((LinkWeights)event);
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
         /*
@@ -63,6 +69,7 @@ An exception should be thrown if the event if an event meant for a registry
         myHostname = InetAddress.getLocalHost().getHostAddress();
         myPort = serverObject.serverSocket.getLocalPort();
         connections = new HashMap<String,Socket>();
+        myIdentifier = myHostname + ":" + myPort;
     }
     /*
     This method is overrriden, it only allows commands to be taken that are applicable to a messenger node.
@@ -141,12 +148,21 @@ An exception should be thrown if the event if an event meant for a registry
 
     }
 
-
+    /*
+    sets the peers local variable, then calls a method to initiate connections to peers
+    */
     public void handleOverlayCreation(MessagingNodesList peers) throws IOException{
         this.peers = peers;
         System.out.println("recieved peers");
         connectToPeers();
     }
+
+    /*
+    uses comparisons between the hostnames of nodes to make sure that only 1 node initates a connections
+    if there is a tie, ie two nodes running on the same hostname, the port is used to break the tie
+
+    it should be impossible for 2 nodes to have the name hostname and port
+     */
 
     public void connectToPeers() throws IOException{
         for(MessagingNodeInfo peer: peers.peers){
@@ -170,13 +186,72 @@ An exception should be thrown if the event if an event meant for a registry
         }
         Thread receiverThread = new Thread(receiver);
         receiverThread.start();
+
+        Register myinfo = new Register(myHostname,myPort);
+        TCPSender sender = new TCPSender(socket);
+        sender.sendData(myinfo.eventData);
+
         System.out.println("connected to peer: " + key);
     }
+
+    public void handlePeerRegistration(Register peerInfo){
+        String key = peerInfo.IPAddress + ":" + peerInfo.port;
+        synchronized (connections) {
+            connections.put(key, peerInfo.socket);
+        }
+        System.out.println("connected onto by peer: " + key);
+    }
+
+    /*
+    this functions calls the shortest path class to run dijkstras algorithm, and construct a map
+    that allows mapping of a destination address to the next address a message needs to be sent to
+    to reach that destination.
+     */
 
     public void handleLinkWeights(LinkWeights linkWeights){
         this.linkWeights = linkWeights;
         System.out.println("Recieved link weights from registry");
+
+        shortestPath = new ShortestPath();
+        shortestPath.initialize(linkWeights);
+        shortestPath.dijkstras(myIdentifier);
+        nextHop = shortestPath.makeNextHopMap();
         //do dijkstras and make next hop map
+    }
+
+    public void handleMessage(Message m) throws IOException{
+        String destination = m.destination;
+        if(destination.equals(myIdentifier)) handleMessageForMe(m);
+        else relayMessage(m);
+    }
+
+    public void relayMessage(Message m) throws IOException{
+        String nextNode = nextHop.get(m.destination);
+        Socket nextNodeSock = connections.get(nextNode);
+        System.out.println("relaying " + nextNode + " socket " + nextNodeSock);
+        TCPSender sender = new TCPSender(nextNodeSock);
+        sender.sendData(m.eventData);
+    }
+
+    public void handleMessageForMe(Message m){
+        //System.out.println("I got a message, and counters aren't implemented yet!");
+    }
+
+    public void handleTaskInitiate(TaskInitiate taskInitiate) throws IOException{
+        int rounds = taskInitiate.rounds;
+        int rand = new Random().nextInt(peers.peers.length);
+        String dest = peers.peers[rand].nodeHostName + ":" + peers.peers[rand].nodePortnum;
+        String source = myIdentifier;
+
+        Random random = new Random();
+
+        for(int i = 0; i<rounds;i++){
+            Message mess = new Message(source,dest,random.nextInt(10));
+            relayMessage(mess);
+        }
+
+        System.out.println("Done sending messages");
+
     }
 
     /*

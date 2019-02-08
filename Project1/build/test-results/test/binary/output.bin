@@ -1,14 +1,69 @@
-HIHIHI
-Server started on port: 1028
-1028
-2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1028]
-Server started on port: 1029
-2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1029]
-[correctly exited with failure for trying to create an overlay with odd nodes and odd links
-
+3 aaaaa:1234 bbbb:4563
+3 hhh:1234 aaa:4563
+2 uu:1234 gg:4563
+4 owo:1234 ss:4563
+9 aaa:4563 uu:1234
+9 gg:4563 owo:1234
+9 ss:4563 aaaaa:1234
+9 bbbb:4563 aaaaa:1234
+9 gg:4563 bbbb:4563
+2147483647 aaaaa:1234
+2147483647 bbbb:4563
+2147483647 hhh:1234
+2147483647 aaa:4563
+2147483647 uu:1234
+2147483647 gg:4563
+2147483647 owo:1234
+2147483647 ss:4563
+
+26 aaaaa:1234
+23 bbbb:4563
+0 hhh:1234
+3 aaa:4563
+12 uu:1234
+14 gg:4563
+23 owo:1234
+27 ss:4563
+>[hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
+	aaa:4563
+3 aaaaa:1234 bbbb:4563
+3 hhh:1234 aaa:4563
+2 uu:1234 gg:4563
+4 owo:1234 ss:4563
+9 aaa:4563 uu:1234
+9 gg:4563 owo:1234
+9 ss:4563 aaaaa:1234
+9 bbbb:4563 aaaaa:1234
+9 gg:4563 bbbb:4563
+2147483647 aaaaa:1234
+2147483647 bbbb:4563
+2147483647 hhh:1234
+2147483647 aaa:4563
+2147483647 uu:1234
+2147483647 gg:4563
+2147483647 owo:1234
+2147483647 ss:4563
+
+26 aaaaa:1234
+23 bbbb:4563
+0 hhh:1234
+3 aaa:4563
+12 uu:1234
+14 gg:4563
+23 owo:1234
+27 ss:4563
+>[hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
+	aaa:4563
+HIHIHI
+Server started on port: 1024
+1024
+2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1024]
+Server started on port: 1025
+2ServerSocket[addr=0.0.0.0/0.0.0.0,localport=1025]
+	[correctly exited with failure for trying to create an overlay with odd nodes and odd links
+
 334567654
-
+
 334567654
-60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	1
-
-#60	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	
+1
+

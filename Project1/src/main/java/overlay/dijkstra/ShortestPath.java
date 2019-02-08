@@ -2,8 +2,11 @@ package overlay.dijkstra;
 
 import overlay.wireformats.LinkInfo;
 import overlay.wireformats.LinkWeights;
+import overlay.dijkstra.Vertex;
+import overlay.dijkstra.Edge;
 
 
+import java.net.Socket;
 import java.util.*;
 
 public class ShortestPath {
@@ -94,74 +97,16 @@ public class ShortestPath {
 
         return path;
     }
-    
 
+    public Map<String, String> makeNextHopMap() {
+        Map<String, String> result = new HashMap<String,String>();
 
-
-    public class Vertex implements Comparable{
-         public String identifier;
-         public boolean visited;
-         public int bestDistance;
-         public ArrayList<Edge> edges;
-         public Vertex previous;
-
-
-
-         private Vertex(String identifier){
-             edges = new ArrayList<Edge>();
-             this.identifier = identifier;
-             visited = false;
-             previous = null;
-             bestDistance = Integer.MAX_VALUE;
-         }
-
-         public void setPrevious(Vertex previous){
-             this.previous = previous;
-         }
-
-
-
-         public boolean equals(Object o){
-             if(! (o instanceof Vertex)) return false;
-             Vertex other = (Vertex)o;
-             if(other.identifier.equals(identifier)) return true;
-             return false;
-         }
-
-        public int compareTo(Object o){
-            Vertex other = (Vertex) o;
-            if(other.bestDistance > this.bestDistance) return -1;
-            if(other.bestDistance == this.bestDistance) return 0;
-            return 1;
+        for(Vertex vert: vertArr){
+            ArrayList<Vertex> path =getSolutionPath(vert);
+            if(path.size()>1) result.put(vert.identifier, path.get(1).identifier);
         }
 
-        public String toString(){
-             return identifier;
-        }
-
-
-    }
-
-
-
-    public class Edge implements Comparable{
-        public Vertex vertex1;
-        public Vertex vertex2;
-        public int weight;
-
-        private Edge(Vertex v1, Vertex v2, int weight){
-            vertex1 = v1;
-            vertex2 = v2;
-            this.weight = weight;
-        }
-
-        public int compareTo(Object o){
-            Edge other = (Edge) o;
-            if(other.weight > this.weight) return -1;
-            if(other.weight == this.weight) return 0;
-            return 1;
-        }
-
+        return result;
 
     }
 

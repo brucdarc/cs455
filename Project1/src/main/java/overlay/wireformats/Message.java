@@ -30,7 +30,6 @@ public class Message extends Protocol{
 
     public Message(byte[] data){
         this.eventData = data;
-        Protocol.printByteArray(data);
         this.eventType = demarshalInt(data);
         this.source = demarshalString(data,4);
         this.destination = demarshalString(data, (source.length() + 8) );

@@ -23,6 +23,7 @@ public abstract class Node {
      */
     public abstract String doCommand(String input) throws IOException;
 
+
     /*
     This is a method that both children will use to take user input in a while loop. It reads a string
     from system in, then runs the do command on it, then prints the output. This method should be called after a
@@ -36,6 +37,7 @@ public abstract class Node {
             System.out.println(output);
         }
     }
+
 
 
 }

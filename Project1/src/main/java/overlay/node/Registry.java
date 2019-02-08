@@ -62,36 +62,51 @@ public class Registry extends Node{
      */
     @Override
     public String doCommand(String input) {
-        String[] words = input.split("\\s+");
-        switch(words[0]){
-            case "test":
-                return "Test message";
-            case "list-messaging-nodes":
-                return "Not implemented yet 1";
-            case "list-weights":
-                return "Not implemented yet 2";
-            case "send-overlay-link-weights":
-                return "Not implemented yet 3";
-            case "setup-overlay":{
-                try {
-                    if(words.length < 2) throw new IOException("Too few arguments specify number of links per node");
-                    int links = Integer.parseInt(words[1]);
-                    constructOverlay(links);
-                    createLinkWeights();
-                    return "successfully sent overlay information to messaging nodes";
+        try {
+            String[] words = input.split("\\s+");
+            switch (words[0]) {
+                case "test":
+                    return "Test message";
+                case "list-messaging-nodes":
+                    return "Not implemented yet 1";
+                case "list-weights":
+                    return "Not implemented yet 2";
+                case "send-overlay-link-weights":
+                    return "Not implemented yet 3";
+                case "setup-overlay": {
+                    try {
+                        if (words.length < 2)
+                            throw new IOException("Too few arguments specify number of links per node");
+                        int links = Integer.parseInt(words[1]);
+                        constructOverlay(links);
+                        createLinkWeights();
+                        return "successfully sent overlay information to messaging nodes";
+                    } catch (Exception e) {
+                        System.out.println(e);
+                        e.printStackTrace();
+                        return "failed to setup overlay";
+                    }
+
                 }
-                catch (Exception e){
-                    System.out.println(e);
-                    e.printStackTrace();
-                    return "failed to setup overlay";
+                case "start": {
+                    if (words.length < 2) throw new IOException("Too few arguments specify rounds");
+                    TaskInitiate taskInitiate = new TaskInitiate(Integer.parseInt(words[1]));
+                    for(int index = 0; index<messengerNodes.size();index++){
+                        Socket toNode = messengerNodes.get(index).socket;
+                        TCPSender sender = new TCPSender(toNode);
+                        sender.sendData(taskInitiate.marshal());
+                    }
+                    return "sent all nodes task initiate with number of rounds";
+
                 }
+
+                default:
+                    return "Command not recognized";
 
             }
-            case "start":
-                return "Not implemented yet 4";
-            default:
-                return "Command not recognized";
-
+        }
+        catch (Exception e){
+            return "e";
         }
     }
     //accessor method
@@ -268,6 +283,8 @@ public class Registry extends Node{
             sender.sendData(result.eventData);
         }
     }
+
+
 
     /*
         Simple main method that will start the server then put the main thread into taking user input.

@@ -20,8 +20,11 @@ public class TCPSender {
     //this class is constructed with 1 socket, and 1 instance will handle
     //communication over just 1 specific socket
     public TCPSender(Socket socket) throws IOException{
-        this.socket = socket;
-        dout = new DataOutputStream(socket.getOutputStream());
+        System.out.println("here0 socket +" + socket);
+        synchronized (socket) {
+            this.socket = socket;
+            dout = new DataOutputStream(socket.getOutputStream());
+        }
     }
 
     /*
@@ -31,7 +34,9 @@ public class TCPSender {
      */
 
     public void sendData(byte[] dataToSend) throws IOException{
+        System.out.println("here");
         synchronized (socket) {
+            System.out.println("here2");
             int dataLength = dataToSend.length;
             //output streams have various write method, we need to make sure
             //we write specifically the bits, and make sure none are cut off from an integer
