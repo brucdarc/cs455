@@ -60,4 +60,13 @@ public class LinkWeights extends Protocol{
         this.linkInfos = linkInfos;
         this.eventData = this.marshal();
     }
+
+    public String toString(){
+        String result = numberOfLinks + "L  ";
+        for(LinkInfo in : linkInfos){
+            result += in;
+            result += "\n";
+        }
+        return result;
+    }
 }

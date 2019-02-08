@@ -36,4 +36,9 @@ public class LinkInfo{
         this.portNumberB = portNumberB;
         this.weight = weight;
     }
+
+    public String toString(){
+        return hostnameA + ":" + portNumberA +"  " + hostnameB + ":" + portNumberB + " W " + weight;
+    }
+
 }

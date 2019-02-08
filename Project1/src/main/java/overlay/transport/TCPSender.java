@@ -34,9 +34,7 @@ public class TCPSender {
      */
 
     public void sendData(byte[] dataToSend) throws IOException{
-        System.out.println("here");
         synchronized (socket) {
-            System.out.println("here2");
             int dataLength = dataToSend.length;
             //output streams have various write method, we need to make sure
             //we write specifically the bits, and make sure none are cut off from an integer

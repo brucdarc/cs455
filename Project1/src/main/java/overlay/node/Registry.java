@@ -32,12 +32,14 @@ public class Registry extends Node{
     public int port;
     public Map<String, Socket> sockets;
     int[][] connectionsTable;
+    public int completeCounter;
 
 
     @Override
     public void onEvent(Event event) throws IOException{
         if(event instanceof Register) register((Register)event);
         if(event instanceof Deregister) deregister((Deregister)event);
+        if (event instanceof TaskComplete) handleTaskComplete((TaskComplete) event);
 
     }
     /*
@@ -95,6 +97,7 @@ public class Registry extends Node{
                         Socket toNode = messengerNodes.get(index).socket;
                         TCPSender sender = new TCPSender(toNode);
                         sender.sendData(taskInitiate.marshal());
+                        completeCounter = 0;
                     }
                     return "sent all nodes task initiate with number of rounds";
 
@@ -261,13 +264,15 @@ public class Registry extends Node{
         ArrayList<LinkInfo> linkInfos = new ArrayList<LinkInfo>();
         for(int i = 0;i<numNodes;i++){
             for(int k = i;k<numNodes;k++){
-                Register node1 = messengerNodes.get(i);
-                Register node2 = messengerNodes.get(k);
-                //random weight 1 through 9
-                int weight = ThreadLocalRandom.current().nextInt(1,10);
-
-                LinkInfo link = new LinkInfo(node1.IPAddress,node1.port,node2.IPAddress,node2.port,weight);
-                linkInfos.add(link);
+                if(connectionsTable[i][k] == 1) {
+                    Register node1 = messengerNodes.get(i);
+                    Register node2 = messengerNodes.get(k);
+                    //random weight 1 through 9
+                    int weight = ThreadLocalRandom.current().nextInt(1,10);
+                    
+                    LinkInfo link = new LinkInfo(node1.IPAddress, node1.port, node2.IPAddress, node2.port, weight);
+                    linkInfos.add(link);
+                }
 
             }
         }
@@ -282,6 +287,14 @@ public class Registry extends Node{
             TCPSender sender = new TCPSender(socket);
             sender.sendData(result.eventData);
         }
+    }
+
+
+    public synchronized void handleTaskComplete(TaskComplete t){
+       completeCounter++;
+       if(completeCounter == messengerNodes.size()){
+           System.out.println("All nodes have completed sending messages");
+       }
     }
 
 

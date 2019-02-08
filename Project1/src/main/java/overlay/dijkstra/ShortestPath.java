@@ -103,6 +103,7 @@ public class ShortestPath {
 
         for(Vertex vert: vertArr){
             ArrayList<Vertex> path =getSolutionPath(vert);
+            System.out.println("making map " + vert + " Path: " + path);
             if(path.size()>1) result.put(vert.identifier, path.get(1).identifier);
         }
 

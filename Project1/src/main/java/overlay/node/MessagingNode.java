@@ -27,6 +27,13 @@ public class MessagingNode extends Node{
     public LinkWeights linkWeights;
     public ShortestPath shortestPath;
     public Map<String, String> nextHop;
+    public Socket regSock;
+
+    public long messagesSent;
+    public long messagesRec;
+    public long sumSent;
+    public long sumRec;
+    public long numRel;
 
     /*
     This method will need to handle all events that can happen to a messaging node.
@@ -44,9 +51,10 @@ public class MessagingNode extends Node{
             if (event instanceof Message) handleMessage((Message) event);
             if (event instanceof TaskInitiate) handleTaskInitiate((TaskInitiate) event);
             if (event instanceof Register) handlePeerRegistration((Register) event);
+
         }
         catch (Exception e){
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -70,6 +78,12 @@ public class MessagingNode extends Node{
         myPort = serverObject.serverSocket.getLocalPort();
         connections = new HashMap<String,Socket>();
         myIdentifier = myHostname + ":" + myPort;
+
+        numRel = 0;
+        messagesRec = 0;
+        messagesSent = 0;
+        sumRec = 0;
+        sumSent = 0;
     }
     /*
     This method is overrriden, it only allows commands to be taken that are applicable to a messenger node.
@@ -104,6 +118,7 @@ public class MessagingNode extends Node{
         int port = myPort;
         Register request = new Register(ip, port);
         Socket regSock = new Socket(registryHostname,registryPortnumber);
+        this.regSock = regSock;
         TCPReceiverThread receiver = new TCPReceiverThread(regSock, this);
         Thread receiverThread = new Thread(receiver);
         receiverThread.start();
@@ -177,7 +192,7 @@ public class MessagingNode extends Node{
         }
     }
 
-    public void connectToPeer(MessagingNodeInfo peer) throws IOException{
+    public synchronized void connectToPeer(MessagingNodeInfo peer) throws IOException{
         Socket socket = new Socket(peer.nodeHostName,peer.nodePortnum);
         String key = peer.nodeHostName + ":" + peer.nodePortnum;
         TCPReceiverThread receiver = new TCPReceiverThread(socket, this);
@@ -194,7 +209,7 @@ public class MessagingNode extends Node{
         System.out.println("connected to peer: " + key);
     }
 
-    public void handlePeerRegistration(Register peerInfo){
+    public synchronized void handlePeerRegistration(Register peerInfo){
         String key = peerInfo.IPAddress + ":" + peerInfo.port;
         synchronized (connections) {
             connections.put(key, peerInfo.socket);
@@ -217,6 +232,9 @@ public class MessagingNode extends Node{
         shortestPath.dijkstras(myIdentifier);
         nextHop = shortestPath.makeNextHopMap();
         //do dijkstras and make next hop map
+
+        System.out.println(linkWeights);
+        System.out.println(nextHop);
     }
 
     public void handleMessage(Message m) throws IOException{
@@ -226,16 +244,36 @@ public class MessagingNode extends Node{
     }
 
     public void relayMessage(Message m) throws IOException{
-        String nextNode = nextHop.get(m.destination);
-        Socket nextNodeSock = connections.get(nextNode);
-        System.out.println("relaying " + nextNode + " socket " + nextNodeSock);
-        TCPSender sender = new TCPSender(nextNodeSock);
-        sender.sendData(m.eventData);
+        synchronized(this){
+            try {
+                String nextNode = nextHop.get(m.destination);
+                Socket nextNodeSock = connections.get(nextNode);
+                System.out.println("relaying " + nextNode + " socket " + nextNodeSock);
+
+                numRel++;
+
+                TCPSender sender = new TCPSender(nextNodeSock);
+                sender.sendData(m.eventData);
+            }
+            catch (NullPointerException e){
+                System.out.println("null pointer encountered");
+                System.out.println(peers + ":" + connections);
+            }
+        }
     }
 
     public void handleMessageForMe(Message m){
+        synchronized(this) {
+            sumRec += m.communicatedValue;
+            messagesRec++;
+        }
         //System.out.println("I got a message, and counters aren't implemented yet!");
     }
+
+    /*
+    Send x messages where x is the number of rounds
+
+     */
 
     public void handleTaskInitiate(TaskInitiate taskInitiate) throws IOException{
         int rounds = taskInitiate.rounds;
@@ -248,9 +286,23 @@ public class MessagingNode extends Node{
         for(int i = 0; i<rounds;i++){
             Message mess = new Message(source,dest,random.nextInt(10));
             relayMessage(mess);
+            synchronized (this){
+                numRel--;
+                messagesSent++;
+                sumSent += mess.communicatedValue;
+            }
         }
 
         System.out.println("Done sending messages");
+        System.out.println("numsent " + messagesSent);
+        System.out.println("sumsent " + sumSent);
+        System.out.println("numrel " + numRel);
+        System.out.println("numrec " + messagesRec);
+        System.out.println("sumrec " + sumRec);
+
+        TaskComplete done = new TaskComplete(myHostname,myPort);
+        TCPSender sender = new TCPSender(regSock);
+        sender.sendData(done.eventData);
 
     }
 

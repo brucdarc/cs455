@@ -25,6 +25,15 @@
 23 owo:1234
 27 ss:4563
 >[hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
+[hhh:1234, aaa:4563]
+Zmaking map aaaaa:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
+Mmaking map bbbb:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563]
+%making map hhh:1234 Path: [hhh:1234]
+/making map aaa:4563 Path: [hhh:1234, aaa:4563]
+7making map uu:1234 Path: [hhh:1234, aaa:4563, uu:1234]
+@making map gg:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563]
+Kmaking map owo:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234]
+Smaking map ss:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234, ss:4563]
 	aaa:4563
 3 aaaaa:1234 bbbb:4563
 3 hhh:1234 aaa:4563
@@ -53,7 +62,19 @@
 23 owo:1234
 27 ss:4563
 >[hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
+[hhh:1234, aaa:4563]
+Zmaking map aaaaa:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
+Mmaking map bbbb:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563]
+%making map hhh:1234 Path: [hhh:1234]
+/making map aaa:4563 Path: [hhh:1234, aaa:4563]
+7making map uu:1234 Path: [hhh:1234, aaa:4563, uu:1234]
+@making map gg:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563]
+Kmaking map owo:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234]
+Smaking map ss:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234, ss:4563]
 	aaa:4563
+	aaa:4563
+null
+†{uu:1234=aaa:4563, aaaaa:1234=aaa:4563, bbbb:4563=aaa:4563, gg:4563=aaa:4563, aaa:4563=aaa:4563, ss:4563=aaa:4563, owo:1234=aaa:4563}
 HIHIHI
 Server started on port: 1024
 1024
