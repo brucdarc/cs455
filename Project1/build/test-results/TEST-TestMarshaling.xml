@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestMarshaling" tests="20" skipped="0" failures="0" errors="0" timestamp="2019-02-08T18:01:18" hostname="brucdarc-laptop" time="0.018">
+  <properties/>
+  <testcase name="testDeregister" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testRegisterResponse" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testLinkWeigts1" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testTaskComplete" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testMarshalInt" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testDemarshalInt" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testTaskInitiate" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testRegister" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testLinkWeigts" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testDemarshalIntOffset" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testMessage" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testDemarshalString" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testTaskSummaryResponse" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testMessagingNodesList2" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testMessagingNodesList3" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testStringMarshalEdgeCases" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testTaskSummaryRequest" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testMessagingNodesList" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testMarshalString" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testdeRegisterResponse" classname="TestMarshaling" time="0.001"/>
+  <system-out><![CDATA[334567654
+334567654
+0	0	0	7	0	0	0	2	98	97	0	0	0	4	100	101	115	116	0	0	0	5	1
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
