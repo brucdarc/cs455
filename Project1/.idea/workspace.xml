@@ -14,11 +14,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/node/MessagingNode.class" afterPath="$PROJECT_DIR$/build/classes/java/main/overlay/node/MessagingNode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/node/Registry.class" afterPath="$PROJECT_DIR$/build/classes/java/main/overlay/node/Registry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/transport/TCPSender.class" afterPath="$PROJECT_DIR$/build/classes/java/main/overlay/transport/TCPSender.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/java/test/TestShortestPath.class" afterPath="$PROJECT_DIR$/build/classes/java/test/TestShortestPath.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/libs/Project1.jar" afterPath="$PROJECT_DIR$/build/libs/Project1.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/TestEventFactory.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/TestEventFactory.html" />
@@ -33,13 +29,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestOverlaySetup.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestOverlaySetup.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestShortestPath.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestShortestPath.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestStartup.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestStartup.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/overlay/dijkstra/ShortestPath.java" afterPath="$PROJECT_DIR$/src/main/java/overlay/dijkstra/ShortestPath.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java" afterPath="$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/overlay/node/Registry.java" afterPath="$PROJECT_DIR$/src/main/java/overlay/node/Registry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/overlay/transport/TCPSender.java" afterPath="$PROJECT_DIR$/src/main/java/overlay/transport/TCPSender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkInfo.java" afterPath="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkWeights.java" afterPath="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkWeights.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/TestShortestPath.java" afterPath="$PROJECT_DIR$/src/test/java/TestShortestPath.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -58,38 +49,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TCPSender.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/overlay/transport/TCPSender.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="22" column="54" lean-forward="false" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Registry.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Registry.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/overlay/node/Registry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="271" column="20" lean-forward="true" selection-start-line="271" selection-start-column="20" selection-end-line="271" selection-end-column="20" />
+            <state relative-caret-position="5610">
+              <caret line="342" column="0" lean-forward="false" selection-start-line="342" selection-start-column="0" selection-end-line="342" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10203#10222#0" expanded="true" />
-                <element signature="e#10831#10841#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessagingNode.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MessagingNode.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="259" column="62" lean-forward="false" selection-start-line="259" selection-start-column="62" selection-end-line="259" selection-end-column="62" />
+            <state relative-caret-position="341">
+              <caret line="292" column="37" lean-forward="true" selection-start-line="292" selection-start-column="37" selection-end-line="292" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskSummaryResponse.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/overlay/wireformats/TaskSummaryResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="748">
+              <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,7 +96,7 @@
       <file leaf-file-name="LinkWeights.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkWeights.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="890">
+            <state relative-caret-position="1122">
               <caret line="68" column="9" lean-forward="false" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
               <folding />
             </state>
@@ -117,7 +106,7 @@
       <file leaf-file-name="OverlayCreator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/overlay/util/OverlayCreator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
+            <state relative-caret-position="612">
               <caret line="36" column="86" lean-forward="false" selection-start-line="36" selection-start-column="85" selection-end-line="36" selection-end-column="86" />
               <folding />
             </state>
@@ -147,7 +136,7 @@
       <file leaf-file-name="TestShortestPath.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/TestShortestPath.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9">
+            <state relative-caret-position="918">
               <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
               <folding />
             </state>
@@ -157,7 +146,7 @@
       <file leaf-file-name="TCPReceiverThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/overlay/transport/TCPReceiverThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="642">
+            <state relative-caret-position="1275">
               <caret line="86" column="2" lean-forward="false" selection-start-line="86" selection-start-column="2" selection-end-line="86" selection-end-column="2" />
               <folding />
             </state>
@@ -239,9 +228,9 @@
         <option value="$PROJECT_DIR$/src/main/java/overlay/dijkstra/ShortestPath.java" />
         <option value="$PROJECT_DIR$/src/test/java/TestShortestPath.java" />
         <option value="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkInfo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkWeights.java" />
         <option value="$PROJECT_DIR$/src/main/java/overlay/node/Registry.java" />
+        <option value="$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java" />
       </list>
     </option>
   </component>
@@ -252,10 +241,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="131" />
-    <option name="y" value="38" />
-    <option name="width" value="1135" />
-    <option name="height" value="1056" />
+    <option name="width" value="1019" />
+    <option name="height" value="1031" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -272,7 +259,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -368,9 +355,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -517,14 +504,16 @@
       <workItem from="1549599662267" duration="8453000" />
       <workItem from="1549649204997" duration="6131000" />
       <workItem from="1549658559289" duration="6387000" />
+      <workItem from="1549668797199" duration="2827000" />
+      <workItem from="1549744722522" duration="495000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92754000" />
+    <option name="totallyTimeSpent" value="96076000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="131" y="38" width="1135" height="1056" extended-state="0" />
+    <frame x="0" y="0" width="1019" height="1031" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -539,7 +528,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1324747" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2039135" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -610,8 +599,6 @@
           <caret line="286" column="0" lean-forward="false" selection-start-line="286" selection-start-column="0" selection-end-line="286" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10203#10222#0" expanded="true" />
-            <element signature="e#10831#10841#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -630,8 +617,6 @@
           <caret line="121" column="32" lean-forward="false" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10203#10222#0" expanded="true" />
-            <element signature="e#10831#10841#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -650,9 +635,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
           <caret line="59" column="48" lean-forward="true" selection-start-line="59" selection-start-column="48" selection-end-line="59" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -702,14 +685,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1564">
           <caret line="96" column="4" lean-forward="false" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#506#522#0" expanded="false" />
-            <element signature="e#571#577#0" expanded="false" />
-            <element signature="e#1704#1712#0" expanded="false" />
-            <element signature="e#2566#2574#0" expanded="false" />
-            <element signature="e#2883#2898#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -717,13 +693,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="28" column="30" lean-forward="false" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/overlay/wireformats/TaskSummaryResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="45" column="30" lean-forward="true" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -922,7 +891,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/overlay/transport/TCPSender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
+        <state relative-caret-position="340">
           <caret line="22" column="54" lean-forward="false" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
           <folding />
         </state>
@@ -930,7 +899,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/overlay/transport/TCPReceiverThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
+        <state relative-caret-position="1275">
           <caret line="86" column="2" lean-forward="false" selection-start-line="86" selection-start-column="2" selection-end-line="86" selection-end-column="2" />
           <folding />
         </state>
@@ -938,7 +907,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/TestShortestPath.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
+        <state relative-caret-position="918">
           <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
           <folding />
         </state>
@@ -960,16 +929,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="259" column="62" lean-forward="false" selection-start-line="259" selection-start-column="62" selection-end-line="259" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
@@ -980,7 +939,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkWeights.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="890">
+        <state relative-caret-position="1122">
           <caret line="68" column="9" lean-forward="false" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
           <folding />
         </state>
@@ -988,20 +947,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/overlay/util/OverlayCreator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
+        <state relative-caret-position="612">
           <caret line="36" column="86" lean-forward="false" selection-start-line="36" selection-start-column="85" selection-end-line="36" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/overlay/wireformats/TaskSummaryResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/overlay/node/Registry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="271" column="20" lean-forward="true" selection-start-line="271" selection-start-column="20" selection-end-line="271" selection-end-column="20" />
+        <state relative-caret-position="5610">
+          <caret line="342" column="0" lean-forward="false" selection-start-line="342" selection-start-column="0" selection-end-line="342" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10203#10222#0" expanded="true" />
-            <element signature="e#10831#10841#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="292" column="37" lean-forward="true" selection-start-line="292" selection-start-column="37" selection-end-line="292" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -29,11 +29,11 @@ public class MessagingNode extends Node{
     public Map<String, String> nextHop;
     public Socket regSock;
 
-    public long messagesSent;
-    public long messagesRec;
-    public long sumSent;
-    public long sumRec;
-    public long numRel;
+    public int messagesSent;
+    public int messagesRec;
+    public int sumSent;
+    public int sumRec;
+    public int numRel;
 
     /*
     This method will need to handle all events that can happen to a messaging node.
@@ -51,12 +51,15 @@ public class MessagingNode extends Node{
             if (event instanceof Message) handleMessage((Message) event);
             if (event instanceof TaskInitiate) handleTaskInitiate((TaskInitiate) event);
             if (event instanceof Register) handlePeerRegistration((Register) event);
+            if (event instanceof TaskSummaryRequest) handleTaskSummaryRequest((TaskSummaryRequest) event);
 
         }
         catch (Exception e){
             System.out.println(e);
         }
     }
+
+
 
         /*
     This constructor creates a TCPServerthread object,
@@ -243,26 +246,26 @@ public class MessagingNode extends Node{
         else relayMessage(m);
     }
 
-    public void relayMessage(Message m) throws IOException{
-        synchronized(this){
-            try {
-                String nextNode = nextHop.get(m.destination);
-                Socket nextNodeSock = connections.get(nextNode);
-                System.out.println("relaying " + nextNode + " socket " + nextNodeSock);
+    public synchronized void relayMessage(Message m) throws IOException{
 
-                numRel++;
+        try {
+            String nextNode = nextHop.get(m.destination);
+            Socket nextNodeSock = connections.get(nextNode);
+            System.out.println("relaying " + nextNode + " socket " + nextNodeSock);
 
-                TCPSender sender = new TCPSender(nextNodeSock);
-                sender.sendData(m.eventData);
-            }
-            catch (NullPointerException e){
-                System.out.println("null pointer encountered");
-                System.out.println(peers + ":" + connections);
-            }
+            numRel++;
+
+            TCPSender sender = new TCPSender(nextNodeSock);
+            sender.sendData(m.eventData);
         }
+        catch (NullPointerException e){
+            System.out.println("null pointer encountered");
+            System.out.println(peers + ":" + connections);
+        }
+
     }
 
-    public void handleMessageForMe(Message m){
+    public synchronized void handleMessageForMe(Message m){
         synchronized(this) {
             sumRec += m.communicatedValue;
             messagesRec++;
@@ -276,6 +279,12 @@ public class MessagingNode extends Node{
      */
 
     public void handleTaskInitiate(TaskInitiate taskInitiate) throws IOException{
+        messagesRec = 0;
+        messagesSent = 0;
+        sumRec = 0;
+        sumSent = 0;
+        numRel = 0;
+
         int rounds = taskInitiate.rounds;
         int rand = new Random().nextInt(peers.peers.length);
         String dest = peers.peers[rand].nodeHostName + ":" + peers.peers[rand].nodePortnum;
@@ -285,12 +294,18 @@ public class MessagingNode extends Node{
 
         for(int i = 0; i<rounds;i++){
             Message mess = new Message(source,dest,random.nextInt(10));
-            relayMessage(mess);
-            synchronized (this){
-                numRel--;
-                messagesSent++;
-                sumSent += mess.communicatedValue;
-            }
+            Socket sock = connections.get(dest);
+            TCPSender sender = new TCPSender(sock);
+            sender.sendData(mess.eventData);
+            messagesSent++;
+            sumSent += mess.communicatedValue;
+        }
+        try {
+
+            Thread.sleep(5000);
+        }
+        catch(InterruptedException e){
+
         }
 
         System.out.println("Done sending messages");
@@ -304,6 +319,14 @@ public class MessagingNode extends Node{
         TCPSender sender = new TCPSender(regSock);
         sender.sendData(done.eventData);
 
+    }
+
+
+    private void handleTaskSummaryRequest(TaskSummaryRequest event) throws IOException {
+        TaskSummaryResponse taskSummaryResponse = new TaskSummaryResponse(myHostname,myPort,messagesSent,sumSent,messagesRec,sumRec,numRel);
+
+        TCPSender toReg = new TCPSender(regSock);
+        toReg.sendData(taskSummaryResponse.eventData);
     }
 
     /*

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestMarshaling" tests="20" skipped="0" failures="0" errors="0" timestamp="2019-02-08T22:55:22" hostname="porsche" time="0.01">
+<testsuite name="TestMarshaling" tests="20" skipped="0" failures="0" errors="0" timestamp="2019-02-09T00:20:32" hostname="indianapolis" time="0.014">
   <properties/>
-  <testcase name="testDeregister" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testDeregister" classname="TestMarshaling" time="0.002"/>
   <testcase name="testRegisterResponse" classname="TestMarshaling" time="0.001"/>
-  <testcase name="testLinkWeigts1" classname="TestMarshaling" time="0.0"/>
-  <testcase name="testTaskComplete" classname="TestMarshaling" time="0.001"/>
-  <testcase name="testMarshalInt" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testLinkWeigts1" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testTaskComplete" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testMarshalInt" classname="TestMarshaling" time="0.001"/>
   <testcase name="testDemarshalInt" classname="TestMarshaling" time="0.0"/>
   <testcase name="testTaskInitiate" classname="TestMarshaling" time="0.001"/>
   <testcase name="testRegister" classname="TestMarshaling" time="0.0"/>
@@ -14,13 +14,13 @@
   <testcase name="testMessage" classname="TestMarshaling" time="0.001"/>
   <testcase name="testDemarshalString" classname="TestMarshaling" time="0.0"/>
   <testcase name="testTaskSummaryResponse" classname="TestMarshaling" time="0.001"/>
-  <testcase name="testMessagingNodesList2" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testMessagingNodesList2" classname="TestMarshaling" time="0.002"/>
   <testcase name="testMessagingNodesList3" classname="TestMarshaling" time="0.0"/>
   <testcase name="testStringMarshalEdgeCases" classname="TestMarshaling" time="0.001"/>
-  <testcase name="testTaskSummaryRequest" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testTaskSummaryRequest" classname="TestMarshaling" time="0.001"/>
   <testcase name="testMessagingNodesList" classname="TestMarshaling" time="0.0"/>
   <testcase name="testMarshalString" classname="TestMarshaling" time="0.0"/>
-  <testcase name="testdeRegisterResponse" classname="TestMarshaling" time="0.0"/>
+  <testcase name="testdeRegisterResponse" classname="TestMarshaling" time="0.001"/>
   <system-out><![CDATA[334567654
 334567654
 1

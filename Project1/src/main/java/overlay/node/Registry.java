@@ -7,10 +7,7 @@ import overlay.wireformats.*;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
@@ -34,14 +31,22 @@ public class Registry extends Node{
     int[][] connectionsTable;
     public int completeCounter;
 
+    public int sumSent;
+    public int sumRec;
+
+    public LinkedHashMap<String,int[]> taskStats;
+
 
     @Override
     public void onEvent(Event event) throws IOException{
         if(event instanceof Register) register((Register)event);
         if(event instanceof Deregister) deregister((Deregister)event);
         if (event instanceof TaskComplete) handleTaskComplete((TaskComplete) event);
+        if (event instanceof TaskSummaryResponse) handleTaskSummaryResponse((TaskSummaryResponse) event);
 
     }
+
+
     /*
     This constructor creates a TCPServerthread object,
     then wraps that in a thread object and starts the thread to begin server execution concurrently
@@ -56,6 +61,8 @@ public class Registry extends Node{
         messengerNodes = new ArrayList<Register>();
         serverThread.start();
         this.port = port;
+        sumSent = 0;
+        sumRec = 0;
     }
 
     /*
@@ -92,6 +99,7 @@ public class Registry extends Node{
                 }
                 case "start": {
                     if (words.length < 2) throw new IOException("Too few arguments specify rounds");
+                    taskStats = new LinkedHashMap<String,int[]>();
                     TaskInitiate taskInitiate = new TaskInitiate(Integer.parseInt(words[1]));
                     for(int index = 0; index<messengerNodes.size();index++){
                         Socket toNode = messengerNodes.get(index).socket;
@@ -290,11 +298,60 @@ public class Registry extends Node{
     }
 
 
-    public synchronized void handleTaskComplete(TaskComplete t){
+    public synchronized void handleTaskComplete(TaskComplete t) throws IOException{
        completeCounter++;
        if(completeCounter == messengerNodes.size()){
            System.out.println("All nodes have completed sending messages");
+
+           try {
+               Thread.sleep(5000);
+           }
+           catch (InterruptedException e){
+               System.out.println("YOU SHALL NOT INTERRUPT ME");
+           }
+
+           TaskSummaryRequest req = new TaskSummaryRequest();
+
+           for(Socket socket:sockets.values()){
+               TCPSender sender = new TCPSender(socket);
+               sender.sendData(req.eventData);
+           }
        }
+
+
+
+
+
+    }
+
+
+    private synchronized void handleTaskSummaryResponse(TaskSummaryResponse event) {
+        int[] nodeStats = {event.numberOfMessagesSent,event.sumOfSentMessages,event.numberOfMessagesReceived,event.sumOfReceivedMessages,event.numberOfMessagesRelayed};
+        String ident = event.nodeIPAddress + ":" + event.nodePortNumber;
+        taskStats.put(ident,nodeStats);
+
+        if(taskStats.size() == messengerNodes.size()){
+            int[] results = {0,0,0,0,0};
+
+            for(String key: taskStats.keySet()){
+                int [] data = taskStats.get(key);
+                for(int k = 0; k<5;k++){
+                    results[k] += data[k];
+                }
+                System.out.println(key + " \t " + printArray(data));
+            }
+
+            System.out.println("Totals \t\t\t "  + printArray(results));
+        }
+    }
+
+    public String printArray(int[] input){
+        String result = "";
+        for(int i = 0; i< input.length; i++){
+            result += input[i];
+            result += " \t";
+        }
+        return result;
     }
 
 
