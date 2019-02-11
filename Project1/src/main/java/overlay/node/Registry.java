@@ -349,7 +349,7 @@ public class Registry extends Node{
         String result = "";
         for(int i = 0; i< input.length; i++){
             result += input[i];
-            result += " \t";
+            result += " \t\t";
         }
         return result;
     }

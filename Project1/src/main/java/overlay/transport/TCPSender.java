@@ -20,11 +20,10 @@ public class TCPSender {
     //this class is constructed with 1 socket, and 1 instance will handle
     //communication over just 1 specific socket
     public TCPSender(Socket socket) throws IOException{
-        System.out.println("here0 socket +" + socket);
-        synchronized (socket) {
-            this.socket = socket;
-            dout = new DataOutputStream(socket.getOutputStream());
-        }
+
+        this.socket = socket;
+        dout = new DataOutputStream(socket.getOutputStream());
+
     }
 
     /*

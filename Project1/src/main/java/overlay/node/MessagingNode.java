@@ -1,6 +1,7 @@
 package overlay.node;
 
 import overlay.dijkstra.ShortestPath;
+import overlay.dijkstra.Vertex;
 import overlay.transport.TCPReceiverThread;
 import overlay.transport.TCPSender;
 import overlay.transport.TCPServerThread;
@@ -242,19 +243,21 @@ public class MessagingNode extends Node{
 
     public void handleMessage(Message m) throws IOException{
         String destination = m.destination;
+        //System.out.println("entered message handling : " + destination + " : " + myIdentifier);
         if(destination.equals(myIdentifier)) handleMessageForMe(m);
         else relayMessage(m);
     }
 
-    public synchronized void relayMessage(Message m) throws IOException{
+    public void relayMessage(Message m) throws IOException{
+        //System.out.println("entered relay method");
 
         try {
             String nextNode = nextHop.get(m.destination);
             Socket nextNodeSock = connections.get(nextNode);
-            System.out.println("relaying " + nextNode + " socket " + nextNodeSock);
-
-            numRel++;
-
+            //System.out.println("relaying " + nextNode + " socket " + nextNodeSock);
+            synchronized (this) {
+                numRel++;
+            }
             TCPSender sender = new TCPSender(nextNodeSock);
             sender.sendData(m.eventData);
         }
@@ -263,13 +266,14 @@ public class MessagingNode extends Node{
             System.out.println(peers + ":" + connections);
         }
 
+
     }
 
     public synchronized void handleMessageForMe(Message m){
-        synchronized(this) {
-            sumRec += m.communicatedValue;
-            messagesRec++;
-        }
+
+        sumRec += m.communicatedValue;
+        messagesRec++;
+
         //System.out.println("I got a message, and counters aren't implemented yet!");
     }
 
@@ -285,24 +289,43 @@ public class MessagingNode extends Node{
         sumSent = 0;
         numRel = 0;
 
+
+
         int rounds = taskInitiate.rounds;
-        int rand = new Random().nextInt(peers.peers.length);
-        String dest = peers.peers[rand].nodeHostName + ":" + peers.peers[rand].nodePortnum;
-        String source = myIdentifier;
+
+        ArrayList<Vertex> nodes = shortestPath.vertArr;
+        Vertex me = new Vertex(myIdentifier);
+        nodes.remove(me);
 
         Random random = new Random();
-
-        for(int i = 0; i<rounds;i++){
-            Message mess = new Message(source,dest,random.nextInt(10));
-            Socket sock = connections.get(dest);
-            TCPSender sender = new TCPSender(sock);
-            sender.sendData(mess.eventData);
-            messagesSent++;
-            sumSent += mess.communicatedValue;
+        try {
+            for (int i = 0; i < rounds; i++) {
+                Socket sock;
+                int rand = random.nextInt(nodes.size());
+                String dest = nodes.get(rand).identifier;
+                String source = myIdentifier;
+                Message mess = new Message(source, dest, random.nextInt(10));
+                if(connections.get(dest) == null) {
+                    String nextPlace = nextHop.get(dest);
+                    System.out.println("nexthop : " + nextPlace);
+                    sock = connections.get(nextPlace);
+                }
+                else{
+                    sock = connections.get(dest);
+                }
+                System.out.println(sock);
+                TCPSender sender = new TCPSender(sock);
+                sender.sendData(mess.eventData);
+                messagesSent++;
+                sumSent += mess.communicatedValue;
+            }
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
         }
         try {
 
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         }
         catch(InterruptedException e){
 

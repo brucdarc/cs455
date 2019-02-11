@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestStartup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-09T00:20:32" hostname="indianapolis" time="0.011">
+<testsuite name="TestStartup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-11T01:56:47" hostname="eel" time="0.008">
   <properties/>
   <testcase name="testTesting" classname="TestStartup" time="0.0"/>
-  <testcase name="testRegistryMessenger" classname="TestStartup" time="0.01"/>
+  <testcase name="testRegistryMessenger" classname="TestStartup" time="0.008"/>
   <system-out><![CDATA[HIHIHI
 Server started on port: 1024
 1024

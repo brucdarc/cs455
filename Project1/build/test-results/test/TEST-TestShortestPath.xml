@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestShortestPath" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-09T00:20:32" hostname="indianapolis" time="0.017">
+<testsuite name="TestShortestPath" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-11T01:56:47" hostname="eel" time="0.011">
   <properties/>
-  <testcase name="TestDijk" classname="TestShortestPath" time="0.013"/>
-  <testcase name="TestDijk2" classname="TestShortestPath" time="0.004"/>
+  <testcase name="TestDijk" classname="TestShortestPath" time="0.008"/>
+  <testcase name="TestDijk2" classname="TestShortestPath" time="0.003"/>
   <system-out><![CDATA[3 aaaaa:1234 bbbb:4563
 3 hhh:1234 aaa:4563
 2 uu:1234 gg:4563
