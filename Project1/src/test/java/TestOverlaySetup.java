@@ -1,9 +1,9 @@
 import org.junit.Before;
 import org.junit.Test;
-import overlay.node.MessagingNode;
-import overlay.node.Registry;
-import overlay.util.OverlayCreator;
-import overlay.wireformats.*;
+import cs455.overlay.node.MessagingNode;
+import cs455.overlay.node.Registry;
+import cs455.overlay.util.OverlayCreator;
+import cs455.overlay.wireformats.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

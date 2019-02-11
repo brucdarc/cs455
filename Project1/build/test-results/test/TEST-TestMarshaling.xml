@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestMarshaling" tests="20" skipped="0" failures="0" errors="0" timestamp="2019-02-11T01:56:47" hostname="eel" time="0.012">
+<testsuite name="TestMarshaling" tests="20" skipped="0" failures="0" errors="0" timestamp="2019-02-11T03:31:43" hostname="eel" time="0.011">
   <properties/>
   <testcase name="testDeregister" classname="TestMarshaling" time="0.001"/>
   <testcase name="testRegisterResponse" classname="TestMarshaling" time="0.001"/>
@@ -14,13 +14,13 @@
   <testcase name="testMessage" classname="TestMarshaling" time="0.0"/>
   <testcase name="testDemarshalString" classname="TestMarshaling" time="0.0"/>
   <testcase name="testTaskSummaryResponse" classname="TestMarshaling" time="0.001"/>
-  <testcase name="testMessagingNodesList2" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testMessagingNodesList2" classname="TestMarshaling" time="0.002"/>
   <testcase name="testMessagingNodesList3" classname="TestMarshaling" time="0.0"/>
   <testcase name="testStringMarshalEdgeCases" classname="TestMarshaling" time="0.0"/>
-  <testcase name="testTaskSummaryRequest" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testTaskSummaryRequest" classname="TestMarshaling" time="0.0"/>
   <testcase name="testMessagingNodesList" classname="TestMarshaling" time="0.0"/>
   <testcase name="testMarshalString" classname="TestMarshaling" time="0.0"/>
-  <testcase name="testdeRegisterResponse" classname="TestMarshaling" time="0.001"/>
+  <testcase name="testdeRegisterResponse" classname="TestMarshaling" time="0.0"/>
   <system-out><![CDATA[334567654
 334567654
 1

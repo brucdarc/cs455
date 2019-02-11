@@ -1,7 +1,7 @@
 import org.junit.Test;
-import overlay.node.MessagingNode;
-import overlay.node.Registry;
-import overlay.wireformats.*;
+import cs455.overlay.node.MessagingNode;
+import cs455.overlay.node.Registry;
+import cs455.overlay.wireformats.*;
 
 import java.io.IOException;
 

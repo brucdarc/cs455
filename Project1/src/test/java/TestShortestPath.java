@@ -1,12 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
-import overlay.dijkstra.ShortestPath;
-import overlay.dijkstra.Vertex;
-import overlay.dijkstra.Edge;
-import overlay.node.MessagingNode;
-import overlay.node.Registry;
-import overlay.util.OverlayCreator;
-import overlay.wireformats.*;
+import cs455.overlay.dijkstra.ShortestPath;
+import cs455.overlay.dijkstra.Vertex;
+import cs455.overlay.dijkstra.Edge;
+import cs455.overlay.node.MessagingNode;
+import cs455.overlay.node.Registry;
+import cs455.overlay.util.OverlayCreator;
+import cs455.overlay.wireformats.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

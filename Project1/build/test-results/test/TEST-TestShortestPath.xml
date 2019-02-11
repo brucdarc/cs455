@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestShortestPath" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-11T01:56:47" hostname="eel" time="0.011">
+<testsuite name="TestShortestPath" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-11T03:31:43" hostname="eel" time="0.01">
   <properties/>
   <testcase name="TestDijk" classname="TestShortestPath" time="0.008"/>
-  <testcase name="TestDijk2" classname="TestShortestPath" time="0.003"/>
+  <testcase name="TestDijk2" classname="TestShortestPath" time="0.002"/>
   <system-out><![CDATA[3 aaaaa:1234 bbbb:4563
 3 hhh:1234 aaa:4563
 2 uu:1234 gg:4563
@@ -31,14 +31,6 @@
 27 ss:4563
 [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
 [hhh:1234, aaa:4563]
-making map aaaaa:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
-making map bbbb:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563]
-making map hhh:1234 Path: [hhh:1234]
-making map aaa:4563 Path: [hhh:1234, aaa:4563]
-making map uu:1234 Path: [hhh:1234, aaa:4563, uu:1234]
-making map gg:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563]
-making map owo:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234]
-making map ss:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234, ss:4563]
 aaa:4563
 3 aaaaa:1234 bbbb:4563
 3 hhh:1234 aaa:4563
@@ -68,14 +60,6 @@ aaa:4563
 27 ss:4563
 [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
 [hhh:1234, aaa:4563]
-making map aaaaa:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
-making map bbbb:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563]
-making map hhh:1234 Path: [hhh:1234]
-making map aaa:4563 Path: [hhh:1234, aaa:4563]
-making map uu:1234 Path: [hhh:1234, aaa:4563, uu:1234]
-making map gg:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563]
-making map owo:1234 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234]
-making map ss:4563 Path: [hhh:1234, aaa:4563, uu:1234, gg:4563, owo:1234, ss:4563]
 aaa:4563
 aaa:4563
 null

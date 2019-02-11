@@ -1,8 +1,8 @@
 
 import org.junit.Test;
-import overlay.node.MessagingNode;
-import overlay.node.Registry;
-import overlay.transport.TCPServerThread;
+import cs455.overlay.node.MessagingNode;
+import cs455.overlay.node.Registry;
+import cs455.overlay.transport.TCPServerThread;
 
 import java.io.IOException;
 
