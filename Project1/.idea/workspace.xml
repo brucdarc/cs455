@@ -1,107 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e611391-c15e-465a-8790-d8613c41bf6d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/Legacy/Connection.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/Legacy/MessengerNode.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/Legacy/Node.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/Legacy/Registry.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/Legacy/Server.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/dijkstra/Edge.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/dijkstra/RoutingCache.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/dijkstra/ShortestPath.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/dijkstra/Vertex.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/node/MessagingNode.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/node/Node.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/node/Registry.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/transport/TCPReceiverThread.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/transport/TCPSender.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/transport/TCPServerThread.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/util/EventQueue.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/util/OverlayCreator.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/util/StatisticsCollectorAndDisplay.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/Deregister.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/DeregisterResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/Event.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/EventFactory.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/LinkInfo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/LinkWeights.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/Message.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/MessagingNodeInfo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/MessagingNodesList.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/Protocol.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/Register.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/RegisterResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/TaskComplete.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/TaskInitiate.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/TaskSummaryRequest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/classes/java/main/overlay/wireformats/TaskSummaryResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/GrabKey.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/GrabKeyGrabber.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/GrabKeyGrabberUnsafe.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/Startup.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/Legacy/Connection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/Legacy/MessengerNode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/Legacy/Node.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/Legacy/Registry.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/Legacy/Server.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/dijkstra/Edge.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/dijkstra/RoutingCache.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/dijkstra/ShortestPath.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/dijkstra/Vertex.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/node/MessagingNode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/node/Node.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/node/Registry.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/transport/TCPReceiverThread.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/transport/TCPSender.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/transport/TCPServerThread.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/util/EventQueue.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/util/OverlayCreator.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/util/StatisticsCollectorAndDisplay.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/Deregister.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/DeregisterResponse.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/Event.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/EventFactory.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/LinkWeights.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/Message.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/MessagingNodeInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/MessagingNodesList.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/Protocol.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/Register.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/RegisterResponse.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/TaskComplete.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/TaskInitiate.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/TaskSummaryRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/overlay/wireformats/TaskSummaryResponse.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/resourceHashesCache.bin" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/resourceHashesCache.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/libs/Project1.jar" afterPath="$PROJECT_DIR$/build/libs/Project1.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/TestEventFactory.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/TestEventFactory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/TestMarshaling.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/TestMarshaling.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/TestOverlaySetup.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/TestOverlaySetup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/TestShortestPath.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/TestShortestPath.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/TestStartup.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/TestStartup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/default-package.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/default-package.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestEventFactory.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestEventFactory.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestMarshaling.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestMarshaling.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestOverlaySetup.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestOverlaySetup.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestShortestPath.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestShortestPath.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/test-results/test/TEST-TestStartup.xml" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-TestStartup.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/TestEventFactory.java" afterPath="$PROJECT_DIR$/src/test/java/TestEventFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/TestMarshaling.java" afterPath="$PROJECT_DIR$/src/test/java/TestMarshaling.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/TestOverlaySetup.java" afterPath="$PROJECT_DIR$/src/test/java/TestOverlaySetup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/TestShortestPath.java" afterPath="$PROJECT_DIR$/src/test/java/TestShortestPath.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/TestStartup.java" afterPath="$PROJECT_DIR$/src/test/java/TestStartup.java" />
-    </list>
+    <list default="true" id="8e611391-c15e-465a-8790-d8613c41bf6d" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -619,16 +519,15 @@
       <workItem from="1549658559289" duration="6387000" />
       <workItem from="1549668797199" duration="2827000" />
       <workItem from="1549744722522" duration="495000" />
-      <workItem from="1549846356418" duration="9745000" />
+      <workItem from="1549846356418" duration="9840000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105821000" />
+    <option name="totallyTimeSpent" value="105916000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="0" width="1926" height="1034" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
