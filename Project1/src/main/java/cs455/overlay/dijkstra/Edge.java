@@ -12,6 +12,15 @@ public class Edge implements Comparable{
         this.weight = weight;
     }
 
+    public boolean equals(Object o){
+        if(! (o instanceof Edge)) return false;
+        Edge other = (Edge) o;
+        if(other.vertex1.equals(vertex1))
+            if(other.vertex2.equals(vertex2))
+                if(other.weight == weight)
+                    return true;
+        return false;
+    }
     public int compareTo(Object o){
         Edge other = (Edge) o;
         if(other.weight > this.weight) return -1;

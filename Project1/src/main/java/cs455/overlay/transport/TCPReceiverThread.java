@@ -94,6 +94,10 @@ public class TCPReceiverThread implements Runnable{
                 break;
             }
 
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
             //here im going to need to do something with the byte array
             //I probably need to pass it back up to something else
 

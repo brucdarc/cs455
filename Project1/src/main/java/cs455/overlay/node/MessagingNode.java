@@ -58,6 +58,7 @@ public class MessagingNode extends Node{
         }
         catch (Exception e){
             System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -257,7 +258,7 @@ public class MessagingNode extends Node{
 
     public void handleLinkWeights(LinkWeights linkWeights){
         this.linkWeights = linkWeights;
-        System.out.println("Recieved link weights from registry");
+        //System.out.println("Recieved link weights from registry");
 
         shortestPath = new ShortestPath();
         shortestPath.initialize(linkWeights);
@@ -271,7 +272,7 @@ public class MessagingNode extends Node{
 
     public void handleMessage(Message m) throws IOException{
         String destination = m.destination;
-        //System.out.println("entered message handling : " + destination + " : " + myIdentifier);
+        //System.out.println("entered message handling to : " + destination + " : I am : " + myIdentifier);
         if(destination.equals(myIdentifier)) handleMessageForMe(m);
         else relayMessage(m);
     }
@@ -333,16 +334,14 @@ public class MessagingNode extends Node{
                 Socket sock;
                 int rand = random.nextInt(nodes.size());
                 String dest = nodes.get(rand).identifier;
+                //System.out.println("Sending message to : " + dest);
                 String source = myIdentifier;
                 Message mess = new Message(source, dest, random.nextInt(10));
-                if(connections.get(dest) == null) {
-                    String nextPlace = nextHop.get(dest);
-                    //System.out.println("nexthop : " + nextPlace);
-                    sock = connections.get(nextPlace);
-                }
-                else{
-                    sock = connections.get(dest);
-                }
+
+                String nextPlace = nextHop.get(dest);
+                //System.out.println("nexthop : " + nextPlace);
+                sock = connections.get(nextPlace);
+
                 //System.out.println(sock);
                 TCPSender sender = new TCPSender(sock);
                 sender.sendData(mess.eventData);
@@ -350,7 +349,7 @@ public class MessagingNode extends Node{
                 sumSent += mess.communicatedValue;
             }
         }
-        catch (NullPointerException e){
+        catch (Exception e){
             e.printStackTrace();
         }
         try {

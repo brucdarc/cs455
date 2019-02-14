@@ -1,69 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestShortestPath" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-11T03:31:43" hostname="eel" time="0.01">
+<testsuite name="TestShortestPath" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-02-14T20:55:19" hostname="mercury" time="0.008">
   <properties/>
-  <testcase name="TestDijk" classname="TestShortestPath" time="0.008"/>
+  <testcase name="TestDijk" classname="TestShortestPath" time="0.004"/>
   <testcase name="TestDijk2" classname="TestShortestPath" time="0.002"/>
-  <system-out><![CDATA[3 aaaaa:1234 bbbb:4563
-3 hhh:1234 aaa:4563
-2 uu:1234 gg:4563
-4 owo:1234 ss:4563
-9 aaa:4563 uu:1234
-9 gg:4563 owo:1234
-9 ss:4563 aaaaa:1234
-9 bbbb:4563 aaaaa:1234
-9 gg:4563 bbbb:4563
-2147483647 aaaaa:1234
-2147483647 bbbb:4563
-2147483647 hhh:1234
-2147483647 aaa:4563
-2147483647 uu:1234
-2147483647 gg:4563
-2147483647 owo:1234
-2147483647 ss:4563
-
-26 aaaaa:1234
-23 bbbb:4563
-0 hhh:1234
-3 aaa:4563
-12 uu:1234
-14 gg:4563
-23 owo:1234
-27 ss:4563
-[hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
-[hhh:1234, aaa:4563]
-aaa:4563
-3 aaaaa:1234 bbbb:4563
-3 hhh:1234 aaa:4563
-2 uu:1234 gg:4563
-4 owo:1234 ss:4563
-9 aaa:4563 uu:1234
-9 gg:4563 owo:1234
-9 ss:4563 aaaaa:1234
-9 bbbb:4563 aaaaa:1234
-9 gg:4563 bbbb:4563
-2147483647 aaaaa:1234
-2147483647 bbbb:4563
-2147483647 hhh:1234
-2147483647 aaa:4563
-2147483647 uu:1234
-2147483647 gg:4563
-2147483647 owo:1234
-2147483647 ss:4563
-
-26 aaaaa:1234
-23 bbbb:4563
-0 hhh:1234
-3 aaa:4563
-12 uu:1234
-14 gg:4563
-23 owo:1234
-27 ss:4563
-[hhh:1234, aaa:4563, uu:1234, gg:4563, bbbb:4563, aaaaa:1234]
-[hhh:1234, aaa:4563]
-aaa:4563
-aaa:4563
+  <testcase name="TestDijk3" classname="TestShortestPath" time="0.002"/>
+  <system-out><![CDATA[aaa:4563
 null
 {uu:1234=aaa:4563, aaaaa:1234=aaa:4563, bbbb:4563=aaa:4563, gg:4563=aaa:4563, aaa:4563=aaa:4563, ss:4563=aaa:4563, owo:1234=aaa:4563}
+Printing edges
+3 1:1 2:2
+3 2:2 3:3
+9 3:3 1:1
+4 4:4 3:3
+Printing vertexes
+2147483647 1:1
+2147483647 2:2
+2147483647 3:3
+2147483647 4:4
+Printing shortest distances to nodes
+0 cost to get to 1:1
+3 cost to get to 2:2
+6 cost to get to 3:3
+10 cost to get to 4:4
+[1:1, 2:2]
+[1:1, 2:2, 3:3]
+[1:1, 2:2, 3:3, 4:4]
+2:2
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

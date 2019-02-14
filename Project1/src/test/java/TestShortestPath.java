@@ -39,6 +39,7 @@ public class TestShortestPath {
         ShortestPath sp = new ShortestPath();
         ArrayList<Edge> edges = sp.initialize(lw);
 
+        /*
         for(Edge e:edges){
             System.out.println(e.weight + " " + e.vertex1.identifier + " " + e.vertex2.identifier);
         }
@@ -46,24 +47,24 @@ public class TestShortestPath {
         for(Vertex v: sp.vertArr){
             System.out.println(v.bestDistance + " " + v.identifier);
         }
+        */
 
-        System.out.println();
 
         ArrayList<Vertex> vs = sp.dijkstras("hhh:1234");
 
+        /*
         for(Vertex v : vs){
             System.out.println(v.bestDistance + " " + v.identifier);
 
         }
+        */
 
         ArrayList<Vertex> solution1 = sp.getSolutionPath(vs.get(0));
         ArrayList<Vertex> solution2 = sp.getSolutionPath(vs.get(3));
-        System.out.println(solution1);
-        System.out.println(solution2);
+
         Map<String, String> nextHop = sp.makeNextHopMap();
 
         String next = nextHop.get(vs.get(0).identifier);
-        System.out.println(next);
 
         this.nextHop = nextHop;
         this.sp = sp;
@@ -105,6 +106,55 @@ public class TestShortestPath {
         System.out.println(next2);
         System.out.println(nextHop);
         //assertEquals(next, "aaa:4563");
+    }
+
+    @Test
+    public void TestDijk3() throws IOException{
+        LinkInfo l3 = new LinkInfo("3",3,"1",1,9);
+        LinkInfo l1 = new LinkInfo("1",1,"2",2,3);
+        LinkInfo l2 = new LinkInfo("2",2,"3",3,3);
+        LinkInfo l4 = new LinkInfo("4",4,"3",3,4);
+
+        LinkInfo[] in = {l1,l2,l3,l4};
+
+        LinkWeights lw = new LinkWeights(5, in);
+        ShortestPath sp = new ShortestPath();
+        ArrayList<Edge> edges = sp.initialize(lw);
+        System.out.println("Printing edges");
+        for(Edge e:edges){
+            System.out.println(e.weight + " " + e.vertex1.identifier + " " + e.vertex2.identifier);
+        }
+
+        System.out.println("Printing vertexes");
+        for(Vertex v: sp.vertArr){
+            System.out.println(v.bestDistance + " " + v.identifier);
+        }
+
+        System.out.println("Printing shortest distances to nodes");
+
+        ArrayList<Vertex> vs = sp.dijkstras("1:1");
+
+        for(Vertex v : vs){
+            System.out.println(v.bestDistance + " cost to get to " + v.identifier);
+
+        }
+
+        ArrayList<Vertex> solution1 = sp.getSolutionPath(vs.get(1));
+        ArrayList<Vertex> solution2 = sp.getSolutionPath(vs.get(2));
+        ArrayList<Vertex> solution3 = sp.getSolutionPath(vs.get(3));
+        System.out.println(solution1);
+        System.out.println(solution2);
+        System.out.println(solution3);
+        Map<String, String> nextHop = sp.makeNextHopMap();
+
+        String next = nextHop.get(vs.get(3).identifier);
+        System.out.println(next);
+
+
+
+        this.nextHop = nextHop;
+        this.sp = sp;
+        this.vs = vs;
     }
 
 

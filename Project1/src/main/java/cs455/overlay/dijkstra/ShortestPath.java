@@ -73,7 +73,7 @@ public class ShortestPath {
                 if(other.bestDistance > pathWeight){
                     other.bestDistance = pathWeight;
                     other.previous = current;
-                    priorityQueue.remove(other);
+                    //priorityQueue.remove(other);
                     priorityQueue.add(other);
 
                 }

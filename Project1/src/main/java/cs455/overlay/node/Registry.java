@@ -150,7 +150,7 @@ public class Registry extends Node{
      */
 
     // TODO: 2/4/19
-    public void register(Register registerRequest) throws IOException{
+    public synchronized void register(Register registerRequest) throws IOException{
         //default respose for successful registration
         RegisterResponse registerResponse = new RegisterResponse((byte)0,"registered successfully");
         Socket sock = registerRequest.socket;
@@ -192,7 +192,7 @@ public class Registry extends Node{
     functions similarly to register, but has different cases for failure, and remove the node from list instead of adding it
      */
 
-    public void deregister(Deregister deregisterRequest) throws IOException{
+    public synchronized void deregister(Deregister deregisterRequest) throws IOException{
         DeregisterResponse deregisterResponse = new DeregisterResponse((byte)0,"registered successfully");
         Socket sock = deregisterRequest.socket;
         String ip = deregisterRequest.IPAddress;
