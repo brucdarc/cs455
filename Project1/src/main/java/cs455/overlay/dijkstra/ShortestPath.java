@@ -17,7 +17,12 @@ public class ShortestPath {
 
 
 
-
+    /*
+    This method takes the linkweights object that comes from the protocol,
+    and transforms it into vertex and edge objects which are easier to work with.
+    Vertex = MessagingNode
+    Edge = link between two MessagingNodes
+     */
     public ArrayList<Edge> initialize(LinkWeights overlay){
         vertArr = new ArrayList<Vertex>();
         Map<String, Vertex> verts = new HashMap<String, Vertex>();
@@ -52,6 +57,11 @@ public class ShortestPath {
         return edges;
     }
 
+    /*
+    Runs dijkstras shortest path, on the transformed data stored in class variables
+    it adds previous and best distance to vertex classes as it goes to store information
+    about best paths
+     */
     public ArrayList<Vertex> dijkstras(String startIdentifier){
         Vertex start = verts.get(startIdentifier);
 
@@ -61,31 +71,33 @@ public class ShortestPath {
 
         priorityQueue.add(start);
 
-        while(!priorityQueue.isEmpty()){
+        while(!priorityQueue.isEmpty()) {
             Vertex current = priorityQueue.poll();
             current.visited = true;
 
-            for(Edge edge: current.edges){
+            for (Edge edge : current.edges) {
                 Vertex other;
-                if(edge.vertex1.equals(current)) other = edge.vertex2;
+                if (edge.vertex1.equals(current)) other = edge.vertex2;
                 else other = edge.vertex1;
                 int pathWeight = current.bestDistance + edge.weight;
-                if(other.bestDistance > pathWeight){
+                if (other.bestDistance > pathWeight) {
                     other.bestDistance = pathWeight;
                     other.previous = current;
                     //priorityQueue.remove(other);
                     priorityQueue.add(other);
 
                 }
-
             }
-
-
         }
+
 
         return vertArr;
     }
 
+    /*
+    iterates backward by the link list of previous that nodes have formed to get all the best paths,
+    returns the shortest path to a given node as an arraylist
+     */
     public ArrayList<Vertex> getSolutionPath(Vertex end){
         ArrayList<Vertex> path = new ArrayList<Vertex>();
         path.add(end);
@@ -97,6 +109,11 @@ public class ShortestPath {
 
         return path;
     }
+    /*
+    gets the shortest path to each node, looks to see which nodes messages need to go to next to get there,
+    then adds the destination identifier and nexthop identifier to a map that allows the messagingNodes
+    to quickly determine where to send an incomming message
+     */
 
     public Map<String, String> makeNextHopMap() {
         Map<String, String> result = new HashMap<String,String>();
@@ -108,10 +125,6 @@ public class ShortestPath {
         }
 
         return result;
-
-    }
-
-    public static void main(String[] argv) {
 
     }
 

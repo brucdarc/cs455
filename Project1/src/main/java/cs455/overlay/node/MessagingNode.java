@@ -114,6 +114,9 @@ public class MessagingNode extends Node{
                 return "Command not recognized";
         }
     }
+    /*
+    creates a string that describes the shortest paths to all nodes
+     */
 
     public String printShortestPath(){
         String result = "";
@@ -133,6 +136,10 @@ public class MessagingNode extends Node{
         }
         return result;
     }
+
+    /*
+    helper method of print shortest path, brute force find an edge
+     */
 
     public Edge findEdge(Vertex v, String id1, String id2){
         for(Edge e:v.edges){
@@ -225,6 +232,11 @@ public class MessagingNode extends Node{
         }
     }
 
+    /*
+    initiates a connection to a peer, and creates a reciever thread for it
+    adds the peers socket to our connections map
+     */
+
     public synchronized void connectToPeer(MessagingNodeInfo peer) throws IOException{
         Socket socket = new Socket(peer.nodeHostName,peer.nodePortnum);
         String key = peer.nodeHostName + ":" + peer.nodePortnum;
@@ -241,6 +253,10 @@ public class MessagingNode extends Node{
 
         //System.out.println("connected to peer: " + key);
     }
+
+    /*
+    handles a peer connecting onto us by adding the peers socket into our connections map
+     */
 
     public synchronized void handlePeerRegistration(Register peerInfo){
         String key = peerInfo.IPAddress + ":" + peerInfo.port;
@@ -277,6 +293,9 @@ public class MessagingNode extends Node{
         else relayMessage(m);
     }
 
+    /*
+    this function send a message to the nexthop it need to get to the destination, and increments the relayed messages counter
+     */
     public void relayMessage(Message m) throws IOException{
         //System.out.println("entered relay method");
 
@@ -303,11 +322,11 @@ public class MessagingNode extends Node{
         sumRec += m.communicatedValue;
         messagesRec++;
 
-        //System.out.println("I got a message, and counters aren't implemented yet!");
     }
 
     /*
-    Send x messages where x is the number of rounds
+    Do x rounds of sending messages to a sink
+    5 messages per round
 
      */
 
@@ -336,17 +355,19 @@ public class MessagingNode extends Node{
                 String dest = nodes.get(rand).identifier;
                 //System.out.println("Sending message to : " + dest);
                 String source = myIdentifier;
-                Message mess = new Message(source, dest, random.nextInt(10));
+                for(int k = 0; k<5;k++) {
+                    Message mess = new Message(source, dest, random.nextInt(10));
 
-                String nextPlace = nextHop.get(dest);
-                //System.out.println("nexthop : " + nextPlace);
-                sock = connections.get(nextPlace);
+                    String nextPlace = nextHop.get(dest);
+                    //System.out.println("nexthop : " + nextPlace);
+                    sock = connections.get(nextPlace);
 
-                //System.out.println(sock);
-                TCPSender sender = new TCPSender(sock);
-                sender.sendData(mess.eventData);
-                messagesSent++;
-                sumSent += mess.communicatedValue;
+                    //System.out.println(sock);
+                    TCPSender sender = new TCPSender(sock);
+                    sender.sendData(mess.eventData);
+                    messagesSent++;
+                    sumSent += mess.communicatedValue;
+                }
             }
         }
         catch (Exception e){
@@ -373,7 +394,9 @@ public class MessagingNode extends Node{
 
     }
 
-
+    /*
+    send statistics back to registry
+     */
     private void handleTaskSummaryRequest(TaskSummaryRequest event) throws IOException {
         TaskSummaryResponse taskSummaryResponse = new TaskSummaryResponse(myHostname,myPort,messagesSent,sumSent,messagesRec,sumRec,numRel);
 
@@ -402,7 +425,6 @@ public class MessagingNode extends Node{
 
         handles respose
          */
-        // TODO: 2/4/19
         try{
             MessagingNode thisMachinesNode = new MessagingNode(registryHostname,registryPortnumber);
             String ip = InetAddress.getLocalHost().getHostAddress();

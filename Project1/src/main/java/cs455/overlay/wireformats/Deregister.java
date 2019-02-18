@@ -19,11 +19,6 @@ public class Deregister extends Protocol{
     public Socket socket;
 
 
-    //this method will need another argument of what to deregister
-    public void deregister(Registry registry){
-
-    }
-
 
     public byte[] marshal()throws IOException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();

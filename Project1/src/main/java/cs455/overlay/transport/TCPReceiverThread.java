@@ -1,13 +1,11 @@
 package cs455.overlay.transport;
 
 import cs455.overlay.node.Node;
-import cs455.overlay.util.EventQueue;
 import cs455.overlay.wireformats.Deregister;
 import cs455.overlay.wireformats.Event;
 import cs455.overlay.wireformats.EventFactory;
 import cs455.overlay.wireformats.Register;
 
-import javax.sound.midi.Soundbank;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;

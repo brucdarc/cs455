@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestOverlaySetup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-14T20:55:19" hostname="mercury" time="0.002">
+<testsuite name="TestOverlaySetup" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-02-18T00:27:49" hostname="albany" time="0.004">
   <properties/>
-  <testcase name="TestEvenOpposite" classname="TestOverlaySetup" time="0.001"/>
-  <testcase name="TestOverlay" classname="TestOverlaySetup" time="0.0"/>
+  <testcase name="TestEvenOpposite" classname="TestOverlaySetup" time="0.002"/>
+  <testcase name="TestOverlay" classname="TestOverlaySetup" time="0.002"/>
   <system-out><![CDATA[correctly exited with failure for trying to create an overlay with odd nodes and odd links
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

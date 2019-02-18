@@ -1,6 +1,10 @@
 package cs455.overlay.dijkstra;
 import cs455.overlay.dijkstra.Vertex;
-
+/*
+This class is an abstraction of a link aka edge in a network.
+ It has two nodes that it links as vertex objects, and a weight
+ It can be compared on its weight, or see if it is equal to another edge (same nodes same weight)
+ */
 public class Edge implements Comparable{
     public Vertex vertex1;
     public Vertex vertex2;

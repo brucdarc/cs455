@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestEventFactory" tests="8" skipped="0" failures="0" errors="0" timestamp="2019-02-14T20:55:19" hostname="mercury" time="0.004">
+<testsuite name="TestEventFactory" tests="8" skipped="0" failures="0" errors="0" timestamp="2019-02-18T00:27:50" hostname="albany" time="0.003">
   <properties/>
   <testcase name="testFactory" classname="TestEventFactory" time="0.001"/>
-  <testcase name="testFactoryBrokenEvent" classname="TestEventFactory" time="0.001"/>
+  <testcase name="testFactoryBrokenEvent" classname="TestEventFactory" time="0.0"/>
   <testcase name="testFactory2" classname="TestEventFactory" time="0.0"/>
-  <testcase name="testFactory3" classname="TestEventFactory" time="0.0"/>
-  <testcase name="testFactory4" classname="TestEventFactory" time="0.001"/>
+  <testcase name="testFactory3" classname="TestEventFactory" time="0.001"/>
+  <testcase name="testFactory4" classname="TestEventFactory" time="0.0"/>
   <testcase name="testFactory5" classname="TestEventFactory" time="0.0"/>
   <testcase name="testFactory6" classname="TestEventFactory" time="0.0"/>
-  <testcase name="testFactory7" classname="TestEventFactory" time="0.001"/>
+  <testcase name="testFactory7" classname="TestEventFactory" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

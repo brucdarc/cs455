@@ -149,7 +149,6 @@ public class Registry extends Node{
     if the registration was valid the connection is added to the sockets map that maps ip strings to sockets
      */
 
-    // TODO: 2/4/19
     public synchronized void register(Register registerRequest) throws IOException{
         //default respose for successful registration
         RegisterResponse registerResponse = new RegisterResponse((byte)0,"registered successfully");
@@ -286,6 +285,9 @@ public class Registry extends Node{
         return result;
     }
 
+    /*
+    creates link weights based on connections table and give them random weights
+     */
 
     public void createLinkWeights() throws IOException{
         int numNodes = connectionsTable.length;
@@ -310,6 +312,9 @@ public class Registry extends Node{
 
     }
 
+    /*
+    make sure all nodes have finished with a complete counter, then then request statistics
+     */
 
     public synchronized void handleTaskComplete(TaskComplete t) throws IOException{
        completeCounter++;
@@ -337,6 +342,10 @@ public class Registry extends Node{
 
     }
 
+    /*
+    puts the statistics of each node into a map, and then if all nodes have sents stats compute totals and ourput to screen
+     */
+
 
     private synchronized void handleTaskSummaryResponse(TaskSummaryResponse event) {
         int[] nodeStats = {event.numberOfMessagesSent,event.sumOfSentMessages,event.numberOfMessagesReceived,event.sumOfReceivedMessages,event.numberOfMessagesRelayed};
@@ -358,6 +367,9 @@ public class Registry extends Node{
             System.out.println("Totals \t\t\t "  + printArray(results));
         }
     }
+    /*
+    helper method to print array
+     */
 
     public String printArray(int[] input){
         String result = "";
