@@ -1,13 +1,13 @@
-#Distributed Systems Project 1
+#Distributed Systems Project 1 #
 
-##Introduction
+##Introduction ##
 This is a piece of software that allows for the creation and usage of a simple distributed network for sending random messages. 
 
 There are two types of servers, a MessagingNode that participates in the task, and the Registry which is like the control center.
 
 There is a bash script included that will start the program on different machines for you using the ssh command, and assumes you have ssh keys set up.
 
-##Startup Instructions
+##Startup Instructions ##
 Run the startup.sh bash script using a gnome terminal. It will not open tabs for the messaging nodes nicely otherwise.
 
 The script takes 4 required arguments
@@ -24,7 +24,7 @@ The script will spawn tabs in the same terminal for each messaging node and a se
 
 To start message sending run the setup-overlay, send-overlay-link-weights, and start commands.
 
-##Registry Commands
+##Registry Commands ##
 
 list-messaging-nodes: Prints out the IP and Port of all registered messaging nodes.
 
@@ -36,7 +36,7 @@ send-overlay-link-weights: Sends information about the edges of the graph to eac
 
 start number-of-rounds: tells each node to send a number of rounds, each round involves sending 5 messages to a randomly chosen sink. Displays statistics when done.
 
-##Messenging Node Commands
+##Messenging Node Commands ##
 
 print-shortest-path: Outputs the best way to send a message to each destination in the network
 
@@ -44,9 +44,9 @@ exit-overlay; Deregisters a node and removes it from the system.
 
 register: Manually re-register a node after exiting the overlay.
 
-##Description of Classes
+##Description of Classes ##
 
-####dijkstras
+####dijkstras ###
 
 Edge: Represents an edge in the network graph. Has two vertices and a weight
 
@@ -54,7 +54,7 @@ Vertex: Represents a vertex in the graph. Has identifier for a machine.
 
 Shortest Path: Puts the overlay data into edge and vertex classes then runs Dijkstras Shortest Path to figure out how to route packets in the network.
 
-####node
+####node ###
 
 Node: An abstract class that shares server functionality between Registry and MessagingNodes
 
@@ -62,7 +62,7 @@ MessagingNode: Main method starts a messaging node server. Communicates with reg
 
 Registry: A main control center for all the messaging nodes. Handles the creation of the network between the nodes, and sends commands to the nodes.
 
-####transport
+####transport ###
 
 TCPReceiverThread: A thread that spins on an already open socket waiting for input, then invokes registry onevent function when it get something
 
@@ -70,13 +70,13 @@ TCPSender: Constructed with a socket, has a method that sends an byte array over
 
 TCPServerThread: Keeps a serversocket open, creates receiver threads when it gets connections
 
-####util
+####util ###
 
 Overlay Creator: Runs an algorithm to determine if a network setup that the user asked for is legal, and if so creates a table of connections, where each row is a node, and if there is a 1 in the column that represents a connection to another node. The registry uses this to send all the nodes their neighbors.
 
 Odd Number of Nodes and Odd Number of Connections per node is the only illegal graph case, all others are valid. 
 
-####wireformats
+####wireformats ###
 
 Event: An interface that all protocols implement
 
