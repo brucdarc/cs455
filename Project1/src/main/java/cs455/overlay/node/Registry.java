@@ -245,10 +245,14 @@ public class Registry extends Node{
 
    runs the connections table set up from the overlay creator class. It returns table of ints where 1 represents a link
    and 0 represents no link. If the setup is illegal, overlay creator will throw an exception
+
+   Shuffle the messengerNodes list before doing this so that the neighbors are random.
      */
 
     public void constructOverlay(int numberOfNeighbors) throws Exception{
         connectionsTable = OverlayCreator.createOverlay(messengerNodes.size(),numberOfNeighbors);
+        //Shuffle the nodes list so that the neighbors each node gets is random
+        Collections.shuffle(messengerNodes);
 
         for(int index = 0; index<messengerNodes.size();index++){
             ArrayList<MessagingNodeInfo> neighbors = getConnectionsFromNode(connectionsTable[index],index);
@@ -298,7 +302,7 @@ public class Registry extends Node{
                     Register node1 = messengerNodes.get(i);
                     Register node2 = messengerNodes.get(k);
                     //random weight 1 through 9
-                    int weight = ThreadLocalRandom.current().nextInt(1,10);
+                    int weight = ThreadLocalRandom.current().nextInt(1,11);
                     
                     LinkInfo link = new LinkInfo(node1.IPAddress, node1.port, node2.IPAddress, node2.port, weight);
                     linkInfos.add(link);
@@ -325,7 +329,7 @@ public class Registry extends Node{
                Thread.sleep(2000);
            }
            catch (InterruptedException e){
-               System.out.println("YOU SHALL NOT INTERRUPT ME");
+               System.out.println(e);
            }
 
            TaskSummaryRequest req = new TaskSummaryRequest();
@@ -366,6 +370,8 @@ public class Registry extends Node{
 
             System.out.println("Totals \t\t\t "  + printArray(results));
         }
+
+
     }
     /*
     helper method to print array

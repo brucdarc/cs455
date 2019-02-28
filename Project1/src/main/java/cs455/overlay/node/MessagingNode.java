@@ -195,11 +195,14 @@ public class MessagingNode extends Node{
 
      */
     //handles registry response. tells the node that if registered correctly or incorrectly
+    //kills the node
     public void handleDeregistryResponse(DeregisterResponse deregisterResponse){
         if(deregisterResponse.statusCode == 1){
             System.out.println("Could not deregister: " + deregisterResponse.additionalInfo);
         }
         else System.out.println("Deregistered successfully: " + deregisterResponse.additionalInfo);
+
+        System.exit(0);
 
     }
 
@@ -378,7 +381,7 @@ public class MessagingNode extends Node{
             Thread.sleep(15000);
         }
         catch(InterruptedException e){
-
+            System.out.println(e);
         }
 
         System.out.println("Done sending messages");
@@ -397,11 +400,16 @@ public class MessagingNode extends Node{
     /*
     send statistics back to registry
      */
-    private void handleTaskSummaryRequest(TaskSummaryRequest event) throws IOException {
+    private synchronized void handleTaskSummaryRequest(TaskSummaryRequest event) throws IOException {
         TaskSummaryResponse taskSummaryResponse = new TaskSummaryResponse(myHostname,myPort,messagesSent,sumSent,messagesRec,sumRec,numRel);
 
         TCPSender toReg = new TCPSender(regSock);
         toReg.sendData(taskSummaryResponse.eventData);
+        messagesRec = 0;
+        messagesSent = 0;
+        sumRec = 0;
+        sumSent = 0;
+        numRel = 0;
     }
 
     /*

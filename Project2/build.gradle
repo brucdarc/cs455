@@ -1,0 +1,28 @@
+plugins{
+	id 'java'
+}
+
+
+
+
+apply plugin: 'java'
+
+jar {
+    manifest {
+        attributes 'Main-Class': ''
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+
+
+
+
+

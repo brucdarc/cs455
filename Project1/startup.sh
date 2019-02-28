@@ -10,6 +10,12 @@ echo Registry Ip: $registryIp
 echo Registry Port: $registryPort
 echo The registry must be the machine you are on.
 
+dir=$(pwd)
+
+
+
+echo $dir
+
 machines=()
 
 for F in $(cat $machineList) ; do
@@ -19,12 +25,12 @@ done
 #echo ${machines[0]}
 
 
-gnome-terminal -- bash -c "java -cp build/classes/java/main/ cs455.overlay.node.Registry $registryPort;"
+gnome-terminal -- bash -c "java -cp $dir/build/classes/java/main/ cs455.overlay.node.Registry $registryPort;"
 
 for ((i=1; i<=$numNodes; i++))
 do 
 	
-	gnome-terminal --tab -t Messenger_Node -- bash -c "ssh ${machines[i]} 'sleep 2; java -cp Desktop/cs455/Project1/build/classes/java/main/ cs455.overlay.node.MessagingNode $registryIp $registryPort'"
+	gnome-terminal --tab -t Messenger_Node -- bash -c "ssh ${machines[i]} 'cd /; sleep 2; java -cp $dir/build/classes/java/main/ cs455.overlay.node.MessagingNode $registryIp $registryPort'"
 	echo Started Node: $i
 done
 

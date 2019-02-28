@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestShortestPath" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-02-18T00:27:49" hostname="albany" time="0.018">
+<testsuite name="TestShortestPath" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-02-19T20:24:50" hostname="mars" time="0.009">
   <properties/>
-  <testcase name="TestDijk" classname="TestShortestPath" time="0.006"/>
-  <testcase name="TestDijk2" classname="TestShortestPath" time="0.003"/>
-  <testcase name="TestDijk3" classname="TestShortestPath" time="0.007"/>
+  <testcase name="TestDijk" classname="TestShortestPath" time="0.005"/>
+  <testcase name="TestDijk2" classname="TestShortestPath" time="0.002"/>
+  <testcase name="TestDijk3" classname="TestShortestPath" time="0.001"/>
   <system-out><![CDATA[aaa:4563
 null
 {uu:1234=aaa:4563, aaaaa:1234=aaa:4563, bbbb:4563=aaa:4563, gg:4563=aaa:4563, aaa:4563=aaa:4563, ss:4563=aaa:4563, owo:1234=aaa:4563}
