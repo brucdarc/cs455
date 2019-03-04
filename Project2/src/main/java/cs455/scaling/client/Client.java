@@ -12,6 +12,7 @@ public class Client {
     public static void main(String[] args) throws Exception{
         if(args.length<2) {
             System.out.println("wrong arguments. Requires: serverPort sendingRate");
+            System.exit(1);
         }
         //know the server port
         int port = Integer.parseInt(args[0]);

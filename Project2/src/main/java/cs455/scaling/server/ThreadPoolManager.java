@@ -1,23 +1,71 @@
 package cs455.scaling.server;
 
-public class ThreadPoolManager {
+import cs455.scaling.datastructures.Batch;
+import cs455.scaling.datastructures.TaskQueue;
+
+import java.io.IOException;
+import java.sql.Time;
+
+public class ThreadPoolManager implements Runnable{
+    //initialize this as a final variable here so only one taskQueue is ever created on
+    //a server
+    public static final TaskQueue taskQueue = new TaskQueue();
+    public static Batch currentBatch;
+    private long batchTime;
+
+    public ThreadPoolManager(long batchTime){
+        this.batchTime = batchTime;
+    }
+
+
+
     /*
     the pool manager should check for different jobs that need to be done.
-    There should be 3 differents tasks to be done:
-    In order of descending priority:
-    >Handling message chains that have time expired
-    >Handling message chains that have length reached
-        *maybe not this last one. It might be just as fast to just have the
-        * server thread do this, since if I dont that thread
-        * will spin for a long time on a lot of useless keys that
-        * are already in the set
-        * that means the set of keys needing to be handled will always be
-        * needing to be touched by the server and worker threads needing to pull
-        * things out, which will cause synchronization slowdowns
-    >Reading messages incomming on socketChannels
+    it needs to keep track of the batch timer and process the current batch when that is up
+
+    it also needs to allocate threads to accept connections, read data in, and process batches.
+
      */
 
 
+    public static void allocateThread() throws Exception {
+        //check the task queue and if it has something at the top grab it and give it to a this thread
+        //this is a compound action so we must grab the lock for the taskQueue object
+        synchronized (taskQueue) {
+            if (!taskQueue.isEmpty()) {
+                //grab a task out of the front of the queue and resolve it in the thread that is calling this method
+                Task nextTask = taskQueue.getNext();
+                nextTask.resolve();
+            }
+        }
+    }
 
 
+    //run method that will keep a thread spinning on checking batch times and
+    //creating new batches
+    //only 1 instance of ThreadPoolManager should ever exist at one.
+    public void run(){
+        Long batchStart = System.currentTimeMillis();
+        ComputeAndSend sendTask;
+        //initialize batch and time
+
+        while(true){
+            boolean isTimeUp = System.currentTimeMillis() - batchStart > batchTime;
+            boolean isBatchFull = false;
+            //check if batch is full
+            //check if batch time is up
+            if(isTimeUp | isBatchFull){
+                synchronized (currentBatch) {
+                    //remove current batch
+                    //create new batch
+                    Batch oldBatch = currentBatch;
+                    currentBatch = new Batch();
+                    //create a batch process task
+                    sendTask = new ComputeAndSend(oldBatch);
+                }
+                //add to task queue
+                taskQueue.add(sendTask);
+            }
+        }
+    }
 }
