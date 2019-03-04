@@ -44,17 +44,21 @@ public class Server{
 
 
         try {
+            //open selector
             Selector selector = Selector.open();
 
 
-
+            //open server socket on the port we specified
             ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
             InetSocketAddress address = new InetSocketAddress("localhost",port);
 
             serverSocketChannel.bind(address);
 
+            //make sure that we are doing non blocking io
             serverSocketChannel.configureBlocking(false);
 
+            //idk why I have to do this but it makes nio work
+            //register the operations?
             int ops = serverSocketChannel.validOps();
             SelectionKey selectionKey = serverSocketChannel.register(selector,ops);
 
@@ -97,6 +101,8 @@ public class Server{
                         //can move on to the next one
                         keyIterator.remove();
                     }
+
+                    else System.out.println("duplicate key");
 
                 }
 

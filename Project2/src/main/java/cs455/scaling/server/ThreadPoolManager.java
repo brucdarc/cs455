@@ -58,6 +58,7 @@ public class ThreadPoolManager implements Runnable{
                 synchronized (currentBatch) {
                     //remove current batch
                     //create new batch
+                    batchStart = System.currentTimeMillis();
                     Batch oldBatch = currentBatch;
                     currentBatch = new Batch();
                     //create a batch process task
