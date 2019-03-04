@@ -11,6 +11,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -71,26 +73,31 @@ public class Server{
                     System.out.println("inside iterator loop: ");
                     SelectionKey currentKey = keyIterator.next();
 
-                    //accept the key correctly
-                    if(currentKey.isAcceptable()){
-                        //create a task to be allocated to a worker thread
-                        AcceptConnection acceptTask = new AcceptConnection(serverSocketChannel, currentKey, selector);
-                        //add task to some sort of task queue
-                        taskQueue.add(acceptTask);
+                    //check if we have already processed that key
+                    if(currentKey.attachment() == null) {
+                        //accept the key correctly
+                        if (currentKey.isAcceptable()) {
+                            //create a task to be allocated to a worker thread
+                            AcceptConnection acceptTask = new AcceptConnection(serverSocketChannel, currentKey, selector);
+                            //add task to some sort of task queue
+                            taskQueue.add(acceptTask);
+                        }
+
+                        //read the key if it needs to be read
+                        else if (currentKey.isReadable()) {
+                            System.out.println("reading: ");
+                            //create a task for receiving the messages
+                            RecieveIncommingMessages recTask = new RecieveIncommingMessages(currentKey);
+                            //add to the task queue
+                            taskQueue.add(recTask);
+                        }
+                        //attach an object to the key so the server know it has already seen it
+                        currentKey.attach(new Integer(7));
+                        //whatever happens make sure we take the key out of the set so we
+                        //can move on to the next one
+                        keyIterator.remove();
                     }
 
-                    //read the key if it needs to be read
-                    else if(currentKey.isReadable()){
-                        System.out.println("reading: ");
-                        //create a task for receiving the messages
-                        RecieveIncommingMessages recTask = new RecieveIncommingMessages(currentKey);
-                        //add to the task queue
-                        taskQueue.add(recTask);
-                    }
-
-                    //whatever happens make sure we take the key out of the set so we
-                    //can move on to the next one
-                    keyIterator.remove();
                 }
 
             }
