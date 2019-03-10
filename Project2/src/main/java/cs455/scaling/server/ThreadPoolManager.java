@@ -5,15 +5,22 @@ import cs455.scaling.datastructures.TaskQueue;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.util.concurrent.Semaphore;
 
 public class ThreadPoolManager implements Runnable{
     //initialize this as a final variable here so only one taskQueue is ever created on
     //a server
     public static final TaskQueue taskQueue = new TaskQueue();
     public static Batch currentBatch;
+    //should never have more than 1000 threads running at once
+    //sem is needed to control problem of having any number able to add
+    //but needing to block all of them if creating a new batch
+    public static Semaphore batchSem = new Semaphore(1000);
     private long batchTime;
+    private long batchSize;
 
-    public ThreadPoolManager(long batchTime){
+    public ThreadPoolManager(long batchSize, long batchTime){
+        this.batchSize = batchSize;
         this.batchTime = batchTime;
     }
 
@@ -50,12 +57,18 @@ public class ThreadPoolManager implements Runnable{
         //initialize batch and time
 
         while(true){
-            boolean isTimeUp = System.currentTimeMillis() - batchStart > batchTime;
-            boolean isBatchFull = false;
+            boolean isTimeUp = false; // System.currentTimeMillis() - batchStart > batchTime;
+            boolean isBatchFull = (batchSize <= currentBatch.getCount().longValue());
+            //System.out.println("Batch size " + batchSize + " is full? " + isBatchFull + " count " + currentBatch.getCount());
             //check if batch is full
             //check if batch time is up
             if(isTimeUp | isBatchFull){
-                synchronized (currentBatch) {
+                //System.out.println("Batch size " + batchSize + " is full? " + isBatchFull + " count " + currentBatch.getCount());
+                try {
+                    //aquire all permits so you wait for all adding to
+                    //finish then prevent adding until you release them
+                    batchSem.acquire(1000);
+                    System.out.println("Processing batch");
                     //remove current batch
                     //create new batch
                     batchStart = System.currentTimeMillis();
@@ -63,9 +76,17 @@ public class ThreadPoolManager implements Runnable{
                     currentBatch = new Batch();
                     //create a batch process task
                     sendTask = new ComputeAndSend(oldBatch);
+                    //add to task queue
+                    taskQueue.add(sendTask);
                 }
-                //add to task queue
-                taskQueue.add(sendTask);
+                catch (Exception e){
+                }
+                finally {
+                    //return permits to pool no matter what
+                    batchSem.release(1000);
+                }
+
+
             }
         }
     }

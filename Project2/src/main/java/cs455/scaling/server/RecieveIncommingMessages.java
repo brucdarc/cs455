@@ -30,13 +30,24 @@ public class RecieveIncommingMessages extends Task {
         clientChannel.read(messageBuffer);
         //turn message and print it out for testing
         String result = new String(messageBuffer.array());
-        System.out.println(result);
+        //System.out.println(result);
 
         //were going to need to add to the pool managers current batch,
         //so grab the lock so the pool manager doesnt try to create a new batch while we do that
-        synchronized (ThreadPoolManager.currentBatch){
+        try{
+            //make sure pool is not currently creating a new batch
+            ThreadPoolManager.batchSem.acquire();
             //add message to the correct data structure, and correct place
             ThreadPoolManager.currentBatch.addMessage(result,clientChannel);
         }
+        catch (Exception e){
+
+        }
+        finally {
+            //return permits to pool no matter what
+            ThreadPoolManager.batchSem.release();
+        }
+        //mark this the key as resolved and able to take out of the queue
+        key.attach(new Integer(0));
     }
 }

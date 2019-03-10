@@ -19,7 +19,10 @@ import java.util.Set;
 public class Server{
 
     public static void main(String[] args){
-        if(args.length < 1) System.exit(1);
+        if(args.length < 4){
+            System.out.println("Wrong args");
+            System.exit(1);
+        }
         int port = Integer.parseInt(args[0]);
 
         System.out.println("starting server on port " + port);
@@ -30,7 +33,7 @@ public class Server{
         ThreadPoolManager.currentBatch = new Batch();
 
         //start the thread pool manager and give it the batch time
-        ThreadPoolManager threadPoolManager = new ThreadPoolManager(Integer.parseInt(args[3]));
+        ThreadPoolManager threadPoolManager = new ThreadPoolManager(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
         Thread poolManagerThread = new Thread(threadPoolManager);
         poolManagerThread.start();
 
@@ -66,7 +69,8 @@ public class Server{
             while(true) {
                 //System.out.println("selecting");
                 //selects the keys, but doesnt give them to you yet
-                selector.select();
+                //use selectNow because it does not block unexpectedly
+                selector.selectNow();
                 //actually get the keys so that we can use them
                 Set<SelectionKey> keys = selector.selectedKeys();
                 //get an iterator from the keyset that will feed us keys
@@ -74,35 +78,49 @@ public class Server{
 
                 //go over all the keys and handle them
                 while(keyIterator.hasNext()){
-                    System.out.println("inside iterator loop: ");
+                    //System.out.println("inside iterator loop: ");
                     SelectionKey currentKey = keyIterator.next();
 
+                    //System.out.println(currentKey.attachment());
                     //check if we have already processed that key
-                    if(currentKey.attachment() == null) {
-                        //accept the key correctly
-                        if (currentKey.isAcceptable()) {
-                            //create a task to be allocated to a worker thread
-                            AcceptConnection acceptTask = new AcceptConnection(serverSocketChannel, currentKey, selector);
-                            //add task to some sort of task queue
-                            taskQueue.add(acceptTask);
-                        }
+                    if(currentKey.attachment() == null || currentKey.attachment().equals(new Integer(0))) {
+                        Integer flag = new Integer(1);
 
-                        //read the key if it needs to be read
-                        else if (currentKey.isReadable()) {
-                            System.out.println("reading: ");
-                            //create a task for receiving the messages
-                            RecieveIncommingMessages recTask = new RecieveIncommingMessages(currentKey);
-                            //add to the task queue
-                            taskQueue.add(recTask);
+                        //accept the key correctly
+                        synchronized (selector) {
+                            if (currentKey.isAcceptable() && currentKey.attachment() == null) {
+                                System.out.println("Accepting");
+                                System.out.println(currentKey.attachment());
+                                //mark the key as in the queue, and should not be added again
+                                currentKey.attach(flag);
+                                //create a task to be allocated to a worker thread
+                                AcceptConnection acceptTask = new AcceptConnection(serverSocketChannel, currentKey, selector);
+                                //add task to some sort of task queue
+                                taskQueue.add(acceptTask);
+
+
+                            }
+
+                            //read the key if it needs to be read
+                            else if (currentKey.isReadable()) {
+                                //mark the key as in the queue, and should not be added again
+                                currentKey.attach(flag);
+                                //System.out.println("reading: ");
+                                //create a task for receiving the messages
+                                RecieveIncommingMessages recTask = new RecieveIncommingMessages(currentKey);
+                                //add to the task queue
+                                taskQueue.add(recTask);
+
+                            }
                         }
                         //attach an object to the key so the server know it has already seen it
-                        currentKey.attach(new Integer(7));
+
                         //whatever happens make sure we take the key out of the set so we
                         //can move on to the next one
                         keyIterator.remove();
                     }
 
-                    else System.out.println("duplicate key");
+                    else ;//System.out.println("duplicate key " + currentKey.attachment());
 
                 }
 
