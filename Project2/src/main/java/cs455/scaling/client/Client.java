@@ -1,28 +1,46 @@
 package cs455.scaling.client;
 
+import cs455.scaling.Hash;
+
+import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
+import java.util.concurrent.*;
 
 public class Client {
 
 
 
     public static void main(String[] args) throws Exception{
-        if(args.length<2) {
-            System.out.println("wrong arguments. Requires: serverPort sendingRate");
+        if(args.length<3) {
+            System.out.println("wrong arguments. Requires: serverHostname serverPort sendingRate");
             System.exit(1);
         }
+
+
         //know the server port
-        int port = Integer.parseInt(args[0]);
+        String hostName = args[0];
+        int port = Integer.parseInt(args[1]);
         //determine the rate of message sending and set a corresponding time for a thread to sleep to achieve that.
-        int rate = Integer.parseInt(args[1]);
+        int rate = Integer.parseInt(args[2]);
         int sleepTime =  1000/rate;
 
+        //use a queue to keep track of which hash needs to come from server back next
+        BlockingQueue<byte[]> hashes = new LinkedBlockingQueue<>();
+
         //initialize the socketChannel that will talk to the server
-        InetSocketAddress crunchifyAddr = new InetSocketAddress("localhost", port);
-        SocketChannel crunchifyClient = SocketChannel.open(crunchifyAddr);
+        InetSocketAddress datAddr = new InetSocketAddress(hostName, port);
+        SocketChannel datClient = SocketChannel.open(datAddr);
+
+        //System.out.println("Creating and starting receiver thread");
+        ClientReceiver receiver = new ClientReceiver(datClient, hashes);
+        Thread recThread = new Thread(receiver);
+        recThread.start();
 
         Random rand = new Random();
         while(true){
@@ -31,10 +49,14 @@ public class Client {
             rand.nextBytes(message);
             ByteBuffer buffer = ByteBuffer.wrap(message);
             //send the message
-            crunchifyClient.write(buffer);
-            //sleep for the right ammount of time so that we achieve the rate we want
+            datClient.write(buffer);
+
+            //add the hash to the hash checking queue
+            byte[] hash = Hash.hash(message);
+            //hashes.add(new BigInteger(1,hash).toString());
+            hashes.add(hash);
+            //sleep for the right amount of time so that we achieve the rate we want
             Thread.sleep(sleepTime);
         }
-
     }
 }

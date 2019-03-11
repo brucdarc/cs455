@@ -5,6 +5,11 @@ import cs455.scaling.datastructures.TaskQueue;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
 
 public class ThreadPoolManager implements Runnable{
@@ -12,12 +17,14 @@ public class ThreadPoolManager implements Runnable{
     //a server
     public static final TaskQueue taskQueue = new TaskQueue();
     public static Batch currentBatch;
+    private static BlockingQueue<WorkerThread> threads = new LinkedBlockingQueue<WorkerThread>();
     //should never have more than 1000 threads running at once
     //sem is needed to control problem of having any number able to add
     //but needing to block all of them if creating a new batch
     public static Semaphore batchSem = new Semaphore(1000);
     private long batchTime;
     private long batchSize;
+
 
     public ThreadPoolManager(long batchSize, long batchTime){
         this.batchSize = batchSize;
@@ -34,16 +41,42 @@ public class ThreadPoolManager implements Runnable{
 
      */
 
+    public static Task addToPool(WorkerThread thread){
+        System.out.println("adding to pool");
+        threads.add(thread);
+
+        synchronized (thread){
+            try {
+                thread.wait();
+                synchronized (taskQueue) {
+                    if (!taskQueue.isEmpty()) {
+                        //grab a task out of the front of the queue and resolve it in the thread that is calling this method
+                        return taskQueue.getNext();
+
+                    }
+                    return null;
+                }
+            }
+            catch (InterruptedException e){
+                return null;
+            }
+        }
+    }
+
 
     public static void allocateThread() throws Exception {
         //check the task queue and if it has something at the top grab it and give it to a this thread
         //this is a compound action so we must grab the lock for the taskQueue object
+        Task nextTask = null;
         synchronized (taskQueue) {
             if (!taskQueue.isEmpty()) {
                 //grab a task out of the front of the queue and resolve it in the thread that is calling this method
-                Task nextTask = taskQueue.getNext();
-                nextTask.resolve();
+                nextTask = taskQueue.getNext();
+
             }
+        }
+        if(nextTask != null){
+            nextTask.resolve();
         }
     }
 
@@ -57,11 +90,19 @@ public class ThreadPoolManager implements Runnable{
         //initialize batch and time
 
         while(true){
-            boolean isTimeUp = false; // System.currentTimeMillis() - batchStart > batchTime;
+            boolean isTimeUp = System.currentTimeMillis() - batchStart > batchTime;
             boolean isBatchFull = (batchSize <= currentBatch.getCount().longValue());
             //System.out.println("Batch size " + batchSize + " is full? " + isBatchFull + " count " + currentBatch.getCount());
             //check if batch is full
             //check if batch time is up
+            if(!threads.isEmpty()) {
+                System.out.println("thread ready");
+                WorkerThread next = threads.remove();
+                synchronized (next) {
+                    next.notify();
+                }
+            }
+
             if(isTimeUp | isBatchFull){
                 //System.out.println("Batch size " + batchSize + " is full? " + isBatchFull + " count " + currentBatch.getCount());
                 try {
@@ -73,17 +114,21 @@ public class ThreadPoolManager implements Runnable{
                     //create new batch
                     batchStart = System.currentTimeMillis();
                     Batch oldBatch = currentBatch;
+                    //System.out.println("here b4 consrt");
                     currentBatch = new Batch();
                     //create a batch process task
+                    //System.out.println("here0");
                     sendTask = new ComputeAndSend(oldBatch);
                     //add to task queue
                     taskQueue.add(sendTask);
+                    //System.out.println("add to q");
                 }
                 catch (Exception e){
                 }
                 finally {
                     //return permits to pool no matter what
                     batchSem.release(1000);
+                    //System.out.println("here");
                 }
 
 

@@ -6,34 +6,36 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /*
 wrapper data structure for the task queue that threads will pull from
 acts like a queue and is synchronized for access to it
  */
 public class TaskQueue {
-    private Queue<Task> taskQueue;
+    private BlockingQueue<Task> taskQueue;
 
 
     public TaskQueue(){
         synchronized (this) {
-            taskQueue = new LinkedList<Task>();
+            taskQueue = new LinkedBlockingQueue<Task>();
         }
     }
 
-    public synchronized void add(Task t){
+    public void add(Task t){
         taskQueue.add(t);
     }
 
-    public synchronized Task getNext(){
+    public Task getNext(){
         return taskQueue.remove();
     }
 
-    public synchronized Task peek(){
+    public Task peek(){
         return taskQueue.peek();
     }
 
-    public synchronized boolean isEmpty(){
+    public boolean isEmpty(){
         return taskQueue.isEmpty();
     }
 

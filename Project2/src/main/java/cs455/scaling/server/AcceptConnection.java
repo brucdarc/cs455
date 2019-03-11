@@ -18,10 +18,15 @@ public class AcceptConnection extends Task{
     }
 
     public void resolve() throws IOException{
+
         synchronized (selector) {
             System.out.println("Resolving accept connection task");
             //grab the connection off of the top of the server channel
             SocketChannel incommingClientChannel = serverSocketChannel.accept();
+
+            if(incommingClientChannel == null){
+                return;
+            }
             //make sure we dont block in our program
             incommingClientChannel.configureBlocking(false);
 
@@ -31,8 +36,6 @@ public class AcceptConnection extends Task{
             incommingClientChannel.register(selector, SelectionKey.OP_READ);
             //mark the key as resolved and ready to take out of the queue
 
-            System.out.println("Attaching new value to key");
-            key.attach(new Integer(0));
         }
 
 

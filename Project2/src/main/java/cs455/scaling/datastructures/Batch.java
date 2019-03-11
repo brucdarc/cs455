@@ -6,29 +6,30 @@ import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Batch {
     /*
     this class needs to contain one batch.
      */
     private LinkedList<ClientMessages> clients;
-    private Long count;
+    private volatile AtomicLong count;
     private Set<SocketChannel> setOfClients;
 
     //simple constructor create datastructure
     public Batch(){
         clients = new LinkedList<ClientMessages>();
-        count = new Long(0);
+        count = new AtomicLong(0);
         setOfClients = new HashSet<SocketChannel>();
 
     }
 
-    public synchronized Long getCount() {
+    public synchronized AtomicLong getCount() {
         return count;
     }
 
     //add a message to a specific clients linked list
-    public void addMessage(String message, SocketChannel client){
+    public void addMessage(byte[] message, SocketChannel client){
 
         //figure out which client the message is from and add it to that clients linked list
 
@@ -47,7 +48,10 @@ public class Batch {
                 //already added it
                 if (!setOfClients.contains(client)) {
                     //compound check then add operation needs to be synchronized
-                    System.out.println("adding client");
+                    try {
+                        System.out.println("adding client " + client.getRemoteAddress());
+                    }
+                    catch (Exception e){}
                     ClientMessages newClient = new ClientMessages(client);
                     //add puts element at end of linked list, so we can traverse list
                     //to add messages at the same time as adding clients
@@ -63,9 +67,9 @@ public class Batch {
             if(c.getClientChannel().equals(client)){
                 c.add(message);
                 synchronized (this) {
-                    count++;
+                    count.getAndIncrement();
                 }
-                System.out.println("adding message " + count);
+                //System.out.println("adding message " + count);
                 //return so the rest of loop doesn't waste time
                 return;
             }
@@ -80,6 +84,11 @@ public class Batch {
 
     public void processBatch(){
         //compute hashes and send them back to each client
+
+        for(ClientMessages cl: clients){
+            System.out.println("sending back to " + cl.getClientChannel());
+            cl.sendMessages();
+        }
     }
 
 

@@ -13,6 +13,7 @@ public class RecieveIncommingMessages extends Task {
 
     public RecieveIncommingMessages(SelectionKey k){
         key = k;
+        k.attach(new Integer(0));
 
     }
 
@@ -27,16 +28,32 @@ public class RecieveIncommingMessages extends Task {
         //make a buffer to read the message
         ByteBuffer messageBuffer = ByteBuffer.allocate(8192);
         //read the message
-        clientChannel.read(messageBuffer);
+        int bytesRead = clientChannel.read(messageBuffer);
+        if(bytesRead == 0) {
+            key.attach(null);
+            System.out.println("duplicate read task, nothing to read");
+            return;
+        }
+        while(bytesRead != 8192){
+            bytesRead += clientChannel.read(messageBuffer);
+        }
         //turn message and print it out for testing
-        String result = new String(messageBuffer.array());
-        //System.out.println(result);
+        byte[] result = messageBuffer.array();
+
+
+
+        //System.out.println(messageBuffer.array()[8000]);
+        // System.out.println("bytes length: " + messageBuffer.array().length + " string: " + result.length());
+
+        //System.out.println(bytesRead);
+        //System.out.println("reading message");
 
         //were going to need to add to the pool managers current batch,
         //so grab the lock so the pool manager doesnt try to create a new batch while we do that
         try{
             //make sure pool is not currently creating a new batch
             ThreadPoolManager.batchSem.acquire();
+            //System.out.println("getting permit");
             //add message to the correct data structure, and correct place
             ThreadPoolManager.currentBatch.addMessage(result,clientChannel);
         }
@@ -48,6 +65,6 @@ public class RecieveIncommingMessages extends Task {
             ThreadPoolManager.batchSem.release();
         }
         //mark this the key as resolved and able to take out of the queue
-        key.attach(new Integer(0));
+        key.attach(null);
     }
 }

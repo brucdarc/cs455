@@ -20,7 +20,7 @@ public class Server{
 
     public static void main(String[] args){
         if(args.length < 4){
-            System.out.println("Wrong args");
+            System.out.println("Wrong args: Server port numWorkers batchSize batchTime");
             System.exit(1);
         }
         int port = Integer.parseInt(args[0]);
@@ -53,7 +53,8 @@ public class Server{
 
             //open server socket on the port we specified
             ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-            InetSocketAddress address = new InetSocketAddress("localhost",port);
+            String hostname = InetAddress.getLocalHost().getHostName();
+            InetSocketAddress address = new InetSocketAddress(hostname,port);
 
             serverSocketChannel.bind(address);
 
@@ -81,18 +82,16 @@ public class Server{
                     //System.out.println("inside iterator loop: ");
                     SelectionKey currentKey = keyIterator.next();
 
+                    //System.out.println(currentKey.channel());
+
                     //System.out.println(currentKey.attachment());
                     //check if we have already processed that key
-                    if(currentKey.attachment() == null || currentKey.attachment().equals(new Integer(0))) {
-                        Integer flag = new Integer(1);
+
 
                         //accept the key correctly
                         synchronized (selector) {
-                            if (currentKey.isAcceptable() && currentKey.attachment() == null) {
+                            if (currentKey.isAcceptable()) {
                                 System.out.println("Accepting");
-                                System.out.println(currentKey.attachment());
-                                //mark the key as in the queue, and should not be added again
-                                currentKey.attach(flag);
                                 //create a task to be allocated to a worker thread
                                 AcceptConnection acceptTask = new AcceptConnection(serverSocketChannel, currentKey, selector);
                                 //add task to some sort of task queue
@@ -104,13 +103,13 @@ public class Server{
                             //read the key if it needs to be read
                             else if (currentKey.isReadable()) {
                                 //mark the key as in the queue, and should not be added again
-                                currentKey.attach(flag);
-                                //System.out.println("reading: ");
-                                //create a task for receiving the messages
-                                RecieveIncommingMessages recTask = new RecieveIncommingMessages(currentKey);
-                                //add to the task queue
-                                taskQueue.add(recTask);
-
+                                if(currentKey.attachment() == null) {
+                                    //System.out.println("reading: ");
+                                    //create a task for receiving the messages
+                                    RecieveIncommingMessages recTask = new RecieveIncommingMessages(currentKey);
+                                    //add to the task queue
+                                    taskQueue.add(recTask);
+                                }
                             }
                         }
                         //attach an object to the key so the server know it has already seen it
@@ -118,9 +117,8 @@ public class Server{
                         //whatever happens make sure we take the key out of the set so we
                         //can move on to the next one
                         keyIterator.remove();
-                    }
 
-                    else ;//System.out.println("duplicate key " + currentKey.attachment());
+
 
                 }
 

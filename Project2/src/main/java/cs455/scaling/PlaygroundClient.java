@@ -3,23 +3,24 @@ package cs455.scaling;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.Random;
 
 public class PlaygroundClient {
 
 
 
     public static void main(String[] argv) throws Exception{
-        InetSocketAddress crunchifyAddr = new InetSocketAddress("localhost", 1111);
-        SocketChannel crunchifyClient = SocketChannel.open(crunchifyAddr);
-        int i = 0;
-        while(true){
-            String message = "Message " + i +"\n";
-            ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
-            crunchifyClient.write(buffer);
-            buffer.clear();
-            i++;
+        Random rand = new Random();
+        System.out.println("enter");
+        byte[] af = new byte[16];
+        rand.nextBytes(af);
+        String result = new String(af, "UTF-8");
+        byte[]  better = result.getBytes("UTF-8");
+        System.out.println("here");
+        for(int i = 0; i<af.length;i++){
+            //System.out.println("in loop");
+            if(better[i] != af[i]) System.out.println(better[i] + ":" + af[i]);
         }
-
 
     }
 }
