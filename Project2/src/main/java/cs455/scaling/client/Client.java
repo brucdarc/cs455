@@ -41,6 +41,8 @@ public class Client {
         ClientReceiver receiver = new ClientReceiver(datClient, hashes);
         Thread recThread = new Thread(receiver);
         recThread.start();
+        long statStartTime = System.currentTimeMillis();
+        long sentCount = 0;
 
         Random rand = new Random();
         while(true){
@@ -50,12 +52,24 @@ public class Client {
             ByteBuffer buffer = ByteBuffer.wrap(message);
             //send the message
             datClient.write(buffer);
+            sentCount++;
 
             //add the hash to the hash checking queue
             byte[] hash = Hash.hash(message);
             //hashes.add(new BigInteger(1,hash).toString());
-            hashes.add(hash);
+            //synchronized (hashes) {
+                hashes.add(hash);
+            //}
             //sleep for the right amount of time so that we achieve the rate we want
+            Long currentTime = System.currentTimeMillis();
+            if(currentTime - statStartTime > 20000){
+                System.out.println(java.time.LocalTime.now() + " Total Sent: " + sentCount + " Total Recieved: " + receiver.recCount);
+                statStartTime = System.currentTimeMillis();
+                sentCount = 0;
+                receiver.recCount.set(0);
+
+            }
+
             Thread.sleep(sleepTime);
         }
     }

@@ -31,7 +31,7 @@ public class RecieveIncommingMessages extends Task {
         int bytesRead = clientChannel.read(messageBuffer);
         if(bytesRead == 0) {
             key.attach(null);
-            System.out.println("duplicate read task, nothing to read");
+            //System.out.println("duplicate read task, nothing to read");
             return;
         }
         while(bytesRead != 8192){

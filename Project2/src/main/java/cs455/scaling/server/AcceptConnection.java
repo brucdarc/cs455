@@ -20,7 +20,7 @@ public class AcceptConnection extends Task{
     public void resolve() throws IOException{
 
         synchronized (selector) {
-            System.out.println("Resolving accept connection task");
+            //System.out.println("Resolving accept connection task");
             //grab the connection off of the top of the server channel
             SocketChannel incommingClientChannel = serverSocketChannel.accept();
 

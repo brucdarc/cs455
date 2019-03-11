@@ -91,7 +91,7 @@ public class Server{
                         //accept the key correctly
                         synchronized (selector) {
                             if (currentKey.isAcceptable()) {
-                                System.out.println("Accepting");
+                                //System.out.println("Accepting");
                                 //create a task to be allocated to a worker thread
                                 AcceptConnection acceptTask = new AcceptConnection(serverSocketChannel, currentKey, selector);
                                 //add task to some sort of task queue

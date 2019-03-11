@@ -42,11 +42,12 @@ public class ThreadPoolManager implements Runnable{
      */
 
     public static Task addToPool(WorkerThread thread){
-        System.out.println("adding to pool");
-        threads.add(thread);
+        //System.out.println("adding to pool");
 
         synchronized (thread){
             try {
+                //System.out.println("waiting");
+                threads.add(thread);
                 thread.wait();
                 synchronized (taskQueue) {
                     if (!taskQueue.isEmpty()) {
@@ -87,16 +88,18 @@ public class ThreadPoolManager implements Runnable{
     public void run(){
         Long batchStart = System.currentTimeMillis();
         ComputeAndSend sendTask;
+        long statTime = System.currentTimeMillis();
         //initialize batch and time
 
         while(true){
-            boolean isTimeUp = System.currentTimeMillis() - batchStart > batchTime;
+            Long time = System.currentTimeMillis();
+            boolean isTimeUp = time - batchStart > batchTime;
             boolean isBatchFull = (batchSize <= currentBatch.getCount().longValue());
             //System.out.println("Batch size " + batchSize + " is full? " + isBatchFull + " count " + currentBatch.getCount());
             //check if batch is full
             //check if batch time is up
             if(!threads.isEmpty()) {
-                System.out.println("thread ready");
+                //System.out.println("thread ready");
                 WorkerThread next = threads.remove();
                 synchronized (next) {
                     next.notify();
@@ -109,7 +112,7 @@ public class ThreadPoolManager implements Runnable{
                     //aquire all permits so you wait for all adding to
                     //finish then prevent adding until you release them
                     batchSem.acquire(1000);
-                    System.out.println("Processing batch");
+                    //System.out.println("Processing batch");
                     //remove current batch
                     //create new batch
                     batchStart = System.currentTimeMillis();
@@ -133,6 +136,13 @@ public class ThreadPoolManager implements Runnable{
 
 
             }
+
+            //compute statistics and print every 20 seconds
+            if(time - statTime > 20000){
+                System.out.println("Stat time");
+                statTime = System.currentTimeMillis();
+            }
+
         }
     }
 }
