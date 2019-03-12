@@ -4,10 +4,9 @@ import cs455.scaling.datastructures.Batch;
 import cs455.scaling.datastructures.TaskQueue;
 
 import java.io.IOException;
+import java.nio.channels.SocketChannel;
 import java.sql.Time;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
@@ -18,6 +17,7 @@ public class ThreadPoolManager implements Runnable{
     public static final TaskQueue taskQueue = new TaskQueue();
     public static Batch currentBatch;
     private static BlockingQueue<WorkerThread> threads = new LinkedBlockingQueue<WorkerThread>();
+    public static HashMap<SocketChannel, Long> cMessagesSent = new HashMap<SocketChannel, Long>();
     //should never have more than 1000 threads running at once
     //sem is needed to control problem of having any number able to add
     //but needing to block all of them if creating a new batch
@@ -139,7 +139,41 @@ public class ThreadPoolManager implements Runnable{
 
             //compute statistics and print every 20 seconds
             if(time - statTime > 20000){
+                ArrayList<Long> sentCounts = new ArrayList<Long>();
                 System.out.println("Stat time");
+                for(SocketChannel client: cMessagesSent.keySet()){
+                    synchronized (cMessagesSent) {
+                        Long sent = cMessagesSent.get(client);
+                        sentCounts.add(sent);
+                    }
+                }
+                synchronized (cMessagesSent) {
+                    cMessagesSent = new HashMap<SocketChannel, Long>();
+                }
+
+                double throughput = 0;
+                for(Long number: sentCounts){
+                    throughput += number;
+                }
+
+                double standardOfDev = 0;
+
+                throughput = throughput/20;
+                double numClients = sentCounts.size();
+                double mean = throughput/numClients;
+
+                for(Long number: sentCounts){
+                    standardOfDev += Math.pow((double)(number/20) - mean, 2);
+                }
+                standardOfDev = Math.sqrt(standardOfDev/numClients);
+
+                System.out.println("Server Throughput: " + throughput + " Active Clients: " + numClients
+                + " Mean Per-Client Throughput: " + mean + " STD of Mean Throughput: " + standardOfDev);
+
+
+
+
+
                 statTime = System.currentTimeMillis();
             }
 

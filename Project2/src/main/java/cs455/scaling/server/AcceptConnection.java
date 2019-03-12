@@ -30,11 +30,17 @@ public class AcceptConnection extends Task{
             //make sure we dont block in our program
             incommingClientChannel.configureBlocking(false);
 
+
+            synchronized (ThreadPoolManager.cMessagesSent){
+                ThreadPoolManager.cMessagesSent.put(incommingClientChannel, new Long(0));
+            }
             //put the channel back into the keyset so we
             //can now read what it has to say to us
             //register the connection as readable for the selector to pick up
             incommingClientChannel.register(selector, SelectionKey.OP_READ);
             //mark the key as resolved and ready to take out of the queue
+
+
 
         }
 

@@ -24,6 +24,12 @@ public class RecieveIncommingMessages extends Task {
         //grab the channel we already made for it
         SocketChannel clientChannel = (SocketChannel)key.channel();
 
+        synchronized (ThreadPoolManager.cMessagesSent){
+            Long sentNum = ThreadPoolManager.cMessagesSent.get(clientChannel);
+            if(sentNum == null) sentNum = new Long(0);
+            ThreadPoolManager.cMessagesSent.put(clientChannel, sentNum+1);
+        }
+
         SocketAddress clientaddress = clientChannel.getRemoteAddress();
         //make a buffer to read the message
         ByteBuffer messageBuffer = ByteBuffer.allocate(8192);
