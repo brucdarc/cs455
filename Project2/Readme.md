@@ -15,7 +15,7 @@ Run this program from a gnome terminal for it to properly open terminal tabs
 
 Arguments: userName
 
-Kills all java processes of that user on each 120 machine. Use with you're username to kill all clients
+Kills all java processes of that user on each 120 machine. Use with your username to kill all clients
 
 
 
