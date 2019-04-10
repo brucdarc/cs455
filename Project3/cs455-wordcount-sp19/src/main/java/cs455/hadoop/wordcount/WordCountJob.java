@@ -17,6 +17,15 @@ public class WordCountJob {
     public static void main(String[] args) {
         try {
             Configuration conf = new Configuration();
+
+            /*
+            conf.set("yarn.application.classpath",
+                    "{{HADOOP_CONF_DIR}},{{HADOOP_COMMON_HOME}}/share/hadoop/common/*,{{HADOOP_COMMON_HOME}}/share/hadoop/common/lib/*,"
+                            + " {{HADOOP_HDFS_HOME}}/share/hadoop/hdfs/*,{{HADOOP_HDFS_HOME}}/share/hadoop/hdfs/lib/*,"
+                            + "{{HADOOP_MAPRED_HOME}}/share/hadoop/mapreduce/*,{{HADOOP_MAPRED_HOME}}/share/hadoop/mapreduce/lib/*,"
+                            + "{{HADOOP_YARN_HOME}}/share/hadoop/yarn/*,{{HADOOP_YARN_HOME}}/share/hadoop/yarn/lib/*");
+            */
+
             // Give the MapRed job a name. You'll see this name in the Yarn webapp.
             Job job = Job.getInstance(conf, "word count");
             // Current class.
