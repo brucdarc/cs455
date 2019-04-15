@@ -24,7 +24,7 @@ public class MetadataMapper extends Mapper<LongWritable, Text, Text, Text> {
             long count = 0;
             if (!lines[8].isEmpty()) {
 
-                context.write(new Text("Q1"), new Text("1," + lines[3] + "," + lines[7] + "," + lines[8]));
+                context.write(new Text("Q1"), new Text("1," + lines[3] + "," + lines[7] + "," + lines[8] + "," + lines[9]));
 
             }
         }

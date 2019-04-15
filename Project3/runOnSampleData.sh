@@ -1,0 +1,1 @@
+$HADOOP_HOME/bin/hadoop jar cs455-wordcount-sp19/build/libs/cs455-wordcount-sp19.jar cs455.hadoop.wordcount.WordCountJob /home/analysisEx/analysis1.csv /home/metadataEx/metadata1.csv /home/analysis/out38

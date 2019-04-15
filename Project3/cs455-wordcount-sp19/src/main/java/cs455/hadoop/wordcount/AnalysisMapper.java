@@ -22,15 +22,20 @@ public class AnalysisMapper extends Mapper<LongWritable, Text, Text, Text> {
         // emit word, count pairs.
         try {
             long count = 0;
-            if (!lines[2].isEmpty() && !lines[2].equals("song_hotttnesss")) {
-                double lowlife = Double.parseDouble(lines[2]);
+            //if (!lines[2].isEmpty() && !lines[2].equals("song_hotttnesss")) {
 
-                context.write(new Text("Q1"), new Text("0," + lines[1]));
+                double endOfFadeIn = Double.parseDouble(lines[6]);
+                double startOfFadeOut = Double.parseDouble(lines[13]);
+                double songLength = Double.parseDouble(lines[5]);
+                double fadingTime = endOfFadeIn + (songLength - startOfFadeOut);
+                String startTime = lines[18];
 
-            }
+                context.write(new Text("Q1"), new Text("0," + lines[1] + "," + lines[2] + "," + lines[10] + "," + fadingTime + "," + songLength + "," + lines[4] + "," + lines[7]));
+
+            //}
         }
         catch(Exception e){
-
+            context.write(new Text("Q1"), new Text("2," + e.toString()));
         }
 
 
