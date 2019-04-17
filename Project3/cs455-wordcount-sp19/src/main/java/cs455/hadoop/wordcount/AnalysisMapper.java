@@ -6,6 +6,9 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import java.lang.Double;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 /**
@@ -38,6 +41,36 @@ public class AnalysisMapper extends Mapper<LongWritable, Text, Text, Text> {
             context.write(new Text("Q1"), new Text("2," + e.toString()));
         }
 
+        String[] segmentStarts = lines[18].split(" ");
+        String[] segmentPitch = lines[20].split(" ");
+        String[] segmentTimbre = lines[21].split(" ");
+        String[] segmentLoudMax = lines[22].split(" ");
+        String[] segmentLoudMaxTime = lines[23].split(" ");
+        String[] segmentLoudAtStart = lines[24].split(" ");
+        /*
+        try to read in the duration
+         */
+        double duration = 0;
+        String id = lines[1];
+        try{
+            duration = Double.parseDouble(lines[5]);
+        }
+        catch (Exception e){
+
+        }
+
+
+
+        String result = Parser.normalizeAndSendSegments(segmentStarts, segmentPitch, segmentTimbre, segmentLoudMax, segmentLoudMaxTime, segmentLoudAtStart, duration, id);
+        context.write(new Text("Q2"), new Text(result));
+        //Random r = new Randsom();
+        //if(r.nextInt(1000) == 111) context.write(new Text("E"), new Text(lines[18] + "," + lines[20] + "," + lines[21] + "," + lines[22] + "," + lines[23] + "," + lines[23] + "," + lines[24]));
+
+
+    }
+
+
+    public static void main(String[] args){
 
     }
 }

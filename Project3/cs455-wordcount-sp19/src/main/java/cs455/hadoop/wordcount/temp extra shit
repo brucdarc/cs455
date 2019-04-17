@@ -1,0 +1,78 @@
+Map<String, Artist> artistMap = new HashMap<String, Artist>();
+            ArrayList<Artist> arts = new ArrayList<Artist>();
+
+            int count = 0;
+            int errCount = 0;
+            ArrayList<Song> songs = new ArrayList<Song>();
+            Map<String, Song> songsMap = new HashMap<String, Song>();
+
+            for(Text val : values) {
+                String[] fields = val.toString().split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                if(fields[0].equals("0")) {
+                    count++;
+                    //Random r = new Random();
+                    //if(r.nextInt(1000)%456 == 0) context.write(new Text(key), new Text(val));
+                    Song inSong = Parser.parseIntoSong(val.toString());
+                    if (inSong != null) {
+                        songs.add(inSong);
+                        songsMap.put(inSong.id, inSong);
+                    }
+                }
+                if(fields[0].equals("1")){
+                    Artist thisone = parseMeta(val.toString());
+                    String artistId = fields[1];
+                    String songId = fields[3];
+                    if(!artistMap.containsKey(artistId)){
+                        artistMap.put(artistId, thisone);
+                        arts.add(thisone);
+                    }
+                    else{
+                        Artist alreadyIn = artistMap.get(artistId);
+                        alreadyIn.songids.add(songId);
+                    }
+                }
+
+            }
+            context.write(new Text("num artists: "), new Text("" + arts.size() + " : map : " + artistMap.keySet().size()));
+
+            context.write(new Text("sonsg recieved: " + count) , new Text("songs Read in: " + songs.size()));
+            Song average = Parser.averageSongs(songs);
+            context.write(new Text("Average song segments: \n"), new Text("" + average.getSegmentData()));
+
+
+            try {
+                ArrayList<Song> artsAvsCombined = new ArrayList<Song>();
+
+                for (Artist art : arts) {
+                    ArrayList<Song> artSongs = new ArrayList<Song>();
+                    for (String s : art.songids) {
+                        Song song = songsMap.get(s);
+                        artSongs.add(song);
+
+                    }
+                    int counter = 0;
+                    for (Song s : artSongs) {
+                        if (s == null) counter++;
+                    }
+                    context.write(new Text("null songs: "), new Text("" + counter + " : "));
+                    context.write(new Text("total songs: "), new Text("" + artSongs.size() + " : "));
+                    Song artistAverage = Parser.averageSongs(artSongs);
+                    artsAvsCombined.add(artistAverage);
+
+                }
+
+
+
+
+                context.write(new Text("num avriges: "), new Text(artsAvsCombined.size() + " "));
+            }
+            catch (Exception e){
+
+            }
+
+            int counter = 0;
+            for(Song s: songsMap.values()){
+                if (s == null) counter++;
+            }
+            context.write(new Text("null songs: "), new Text("" + counter));
+            context.write(new Text("total songs: "), new Text("" + songs.size() + " : " + songsMap.keySet().size()));
